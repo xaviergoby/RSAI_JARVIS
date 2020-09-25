@@ -1,0 +1,27 @@
+
+####From deleted "video_frames_data_handler.py" script####
+
+opt1: lumbridge-2-cal-kharid gate
+opt2: al-kharid gate-2-lumbridge
+
+[ [frames], [traj_data] ]
+
+@ tick=1: [ [img_array1], [traj_pos1] ]
+@ tick=2: [ [img_array1, img_array2], [traj_pos1, traj_pos2] ]
+@ tick=3: [ [img_array1, img_array2, img_array3], [traj_pos1, traj_pos2, traj_pos3] ]
+
+
+[ [current_frame], [current_traj_pos], [prev_frames], [prev_traj_pos] ]
+
+@ tick=1: [ [img_array1], [traj_pos1], [ ], [ ] ]
+@ tick=2: [ [img_array2], [traj_pos2], [img_array1], [traj_pos1] ]
+@ tick=2: [ [img_array3], [traj_pos3], [img_array1, img_array2], [traj_pos1, traj_pos2] ]
+
+X = [ [current_frame], [prev_frames], [prev_traj_pos] ]
+y = [ [traj_pos1] ]
+
+X = [ [current_frame1], [prev_frames], [prev_traj_pos] ]
+
+[img_array1, traj_data]
+all_current_traj_frames = []
+###############################################################################

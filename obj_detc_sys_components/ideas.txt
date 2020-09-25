@@ -1,0 +1,103 @@
+
+
+
+
+
+Mathematically speaking, we say that an agent’s behavior is described by the agent function that maps any given percept sequence to an action.
+
+Internally, the agent function for an artificial agent will be implemented by an
+agent program. It is important to keep these two ideas distinct. The agent function is an
+abstract mathematical description; the agent program is a concrete implementation, running
+within some physical system.
+
+
+The Structure of Agents:
+So far we have talked about agents by describing behavior—the action that is performed after
+any given sequence of percepts. Now we must bite the bullet and talk about how the insides
+work. The job of AI is to design an agent program that implements the agent function—
+the mapping from percepts to actions. We assume this program will run on some sort of
+computing device with physical sensors and actuators—we call this the architecture:
+agent = architecture + program .
+In general, the architecture makes the percepts from
+the sensors available to the program, runs the program, and feeds the program’s action choices
+to the actuators as they are generated.
+
+2.4.1 Agent programs
+The agent programs that we design in this book all have the same skeleton: they take the
+current percept as input from the sensors and return an action to the actuators.4 Notice the
+difference between the agent program, which takes the current percept as input, and the agent
+function, which takes the entire percept history. The agent program takes just the current
+percept as input because nothing more is available from the environment; if the agent’s actions
+need to depend on the entire percept sequence, the agent will have to remember the percepts.
+
+2.4.2 Simple reflex agents
+The simplest kind of agent is the simple reflex agent. These agents select actions on the basis
+of the current percept, ignoring the rest of the percept history.
+For example, the vacuum agent
+whose agent function is tabulated in Figure 2.3 is a simple reflex agent, because its decision
+is based only on the current location and on whether that location contains dirt. An agent
+program for this agent is shown in Figure 2.8.
+
+
+Bot inherits from the sensor class, actuator class
+
+
+Sensor:
+    ObjectDetectionSystem
+    ObjectTrackingSystem
+
+Actuator:
+
+
+Bot:
+    Agent
+
+    Sensor
+        ObjectDetectionSystem
+        ObjectTrackingSystem
+    Actuator
+
+
+Tasks:
+    mining
+    woodcutting
+    navigation
+    inventory management
+
+Tasks:
+    ResourceGathering
+    Combat
+        fight(entity)
+        loot(item)
+    InventoryManagement
+        drop_item(item_name)
+        drop_items(item_name)
+
+
+
+click on a mine/tree
+click on mob
+click on an item on the ground
+click on an npc
+click on the minimap to navigate
+click on
+
+
+GATHER
+    CHOP
+        click on trew
+        click on trew
+        ...
+        click on trew
+    MINE
+        click on mine
+        click on mine
+        ....
+        click on mine
+
+
+DROP
+drop mine ore
+drop mine ore
+...
+drop mine ore

@@ -1,0 +1,43 @@
+####################################################################################################################################################################################
+TERMS:
+
+
+*.config: the training pipeline configuration file
+For example, if I use the "ssd_inception_v2_coco" model, then the corresponding
+training pipeline configuration file I need to use is "ssd_inception_v2_coco.config"
+
+In this .config file, I must assign the following:
+    num_classes 3
+    batch_size 1
+    fine_tune_checkpoint "C:/Users/Xavier/RSAI_JARVIS/ssd_mobilenet_v1_coco_11_06_2017/model.ckpt"
+    train_input_reader:
+        input_path "C:/Users/Xavier/RSAI_JARVIS/data/obj_dect_data/tasks/mining/train/tf_record_annots/train_mining.record"
+        label_map_path "C:/Users/Xavier/RSAI_JARVIS/training/label_maps/tasks/mining_label_map.pbtxt"
+    num_examples 100
+    eval_input_reader:
+        input_path "C:/Users/Xavier/RSAI_JARVIS/data/obj_dect_data/tasks/mining/test/tf_record_annots/test_mining.record"
+        label_map_path "C:/Users/Xavier/RSAI_JARVIS/training/label_maps/tasks/mining_label_map.pbtxt"
+
+####################################################################################################################################################################################
+TRAINING:
+
+python model_main.py --logtostderr --model_dir=training/ --pipeline_config_path=training/faster_rcnn_inception_v2_pe.confiG
+
+or
+
+# From the tensorflow/models/research/ directory
+PIPELINE_CONFIG_PATH={path to pipeline config file}
+MODEL_DIR={path to model directory}
+NUM_TRAIN_STEPS=50000
+SAMPLE_1_OF_N_EVAL_EXAMPLES=1
+python object_detection/model_main.py \
+    --pipeline_config_path=${PIPELINE_CONFIG_PATH} \
+    --model_dir=${MODEL_DIR} \
+    --num_train_steps=${NUM_TRAIN_STEPS} \
+    --sample_1_of_n_eval_examples=$SAMPLE_1_OF_N_EVAL_EXAMPLES \
+    --alsologtostderr
+
+where ${PIPELINE_CONFIG_PATH} points to the pipeline config and ${MODEL_DIR} points to the directory in which training
+checkpoints and events will be written to. Note that this binary will interleave both training and evaluation.
+
+python model_main.py --alsologtostderr --model_dir=training/ --pipeline_config_path=training/ssd_inception_v2_coco.config

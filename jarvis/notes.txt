@@ -1,0 +1,31 @@
+
+I arrive at where the mines are
+
+I know my position in the world and in the frame and SAVE this.
+
+##############################################
+
+
+I know my position in the minimap in terms of
+
+ 765x503 pixels.
+
+
+ Create an egocentric motion model class
+
+
+
+Interesting or High Potential Topics Encountered & TO REVISIT!
+On Wikipedia:
+    Match moving
+    Motion estimation
+    Video tracking
+    Tomasi–Kanade factorization
+    Epipolar geometry
+    Digital image correlation and tracking
+    Image registration
+    Teknomo–Fernandez algorithm
+    Outline of object recognition
+    Nonogram
+Other:
+    2.5D motion tracking

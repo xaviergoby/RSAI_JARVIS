@@ -1,0 +1,106 @@
+
+Generating TFRecords, .record, files from .csv files
+python generate_tfrecord.py --csv_input=data/train_labels.csv --images_dir=images/train --output_path=data/train.record
+python generate_tfrecord.py --csv_input=data/test_labels.csv --images_dir=images/test --output_path=data/test.record
+
+WORKING:
+python generate_tfrecord.py --csv_input=data/train_labels.csv --output_path=train.record --image_dir=train
+python generate_tfrecord.py --csv_input=data/test_labels.csv --output_path=test.record --image_dir=test
+
+python3 generate_tfrecord.py --csv_input=data/train_labels.csv --output_path=data/train.record
+
+Changes to make in ssd_mobilenet_v1_pets.config:
+num_classes: 1
+
+fine_tune_checkpoint: "ssd_mobilenet_v1_coco_11_06_2017/model.ckpt"
+
+train_input_reader: {
+  tf_record_input_reader {
+    input_path: "data/train.record"
+  }
+  label_map_path: "training/object-detection.pbtxt"
+}
+
+eval_input_reader: {
+  tf_record_input_reader {
+    input_path: "data/test.record"
+  }
+  label_map_path: "training/object-detection.pbtxt"
+
+  copy train.py in /object_detection/legacy into my object_detection folder
+
+  cmd train command (run inside:
+  python train.py --logtostderr --train_dir=training\ --pipeline_config_path=training\faster_rcnn_inception_v2_pets.config
+
+  python3 train.py --logtostderr --train_dir=training\ --pipeline_config_path=training/ssd_mobilenet_v1_pets.config
+  python train.py --logtostderr --train_dir=training/ --pipeline_config_path=training/faster_rcnn_inception_v2_pets.config
+
+
+
+the 4 main folders:
+data
+training
+images
+ssd_mobilenet_v1_coo_11_06_2017
+need to be moved into models/research/object_detection
+
+folder structures:
+data
+    test_labels.csv
+    train_labels.csv
+    test.record
+    train.record
+
+images
+    train
+        image10.jpg
+        image10.xml
+        ...
+    test
+        image1.jpg
+        image1.xml
+        ...
+
+training
+    ssd_mobilenet_v1_pets.config
+    object-detect.pbtxt
+
+ssd_mobilenet_v1_coco_11_06_2017
+
+tensorboard --logdir=training --host=127.0.0.1
+
+python export_inference_graph.py --input_type image_tensor --pipeline_config_path training/ssd_mobilenet_v1_pets.config --trained_checkpoint_prefix training/model.ckpt-9292 --output_directory inference_graph
+python export_inference_graph.py --input_type image_tensor --pipeline_config_path ssd_mobilenet_v1_pets.config --trained_checkpoint_prefix training/model.ckpt-9292 --output_directory inference_graph
+
+# Create train data:
+python xml_to_csv_v2.py -i C:/Users/RSAIBot/src/TensorFlow_Models/images/train -o [PATH_TO_ANNOTATIONS_FOLDER]/train_labels.csv
+
+# Create test data:
+python xml_to_csv.py -i [PATH_TO_IMAGES_FOLDER]/test -o [PATH_TO_ANNOTATIONS_FOLDER]/test_labels.csv
+
+# For example
+# python xml_to_csv.py -i C:\Users\sglvladi\Documents\TensorFlow\workspace\training_demo\images\train -o C:\Users\sglvladi\Documents\TensorFlow\workspace\training_demo\annotations\train_labels.csv
+# python xml_to_csv.py -i C:\Users\sglvladi\Documents\TensorFlow\workspace\training_demo\images\test -o C:\Users\sglvladi\Documents\TensorFlow\workspace\training_demo\annotations\test_labels.csv
+
+# From inside TensorFlow_Models
+python generate_tfrecord.py --csv_input=annots\slaying_cows_train_labels.csv --image_dir=images\tasks\slaying\train --output_path=annots\slaying_cows_train.record
+python generate_tfrecord.py --csv_input=annots\slaying_cows_test_labels.csv --image_dir=images\tasks\slaying\test --output_path=annots\slaying_cows_test.record
+
+OR
+
+python generate_tfrecord.py --csv_input=annots\slaying_cows_train_labels.csv --image_dir=images\tasks\slaying_cows\train --output_path=annots\slaying_cows_train.record
+python generate_tfrecord.py --csv_input=annots\slaying_cows_test_labels.csv --image_dir=images\tasks\slaying_cows\test --output_path=annots\slaying_cows_test.record
+
+python train.py --logtostderr --train_dir=training\ --pipeline_config_path=training/ssd_mobilenet_v1_pets.config
+or
+python train.py --logtostderr --train_dir=training\ --pipeline_config_path=training\ssd_mobilenet_v1_pets.config
+
+
+# NOTE: WINDOWS USES BACKSLASHES, \, EVERYTHING ELSE USES FORWARDSLASHES, /.
+
+
+# Useful (common) windows cmd prompt code snippets
+cd ..\      or      cd ../      <=== To go back 1 dir
+cd ..\..\      or      cd ../../      <=== To go back 2 dir
+cd src\TensorFlow_Models    or    cd src/TensorFlow_Models
+cd src\TensorFlow_Models\models\research\slim       or      cd src/TensorFlow_Models/models/research/slim

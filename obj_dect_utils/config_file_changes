@@ -1,0 +1,35 @@
+
+
+
+
+for ssd_mobilenet_v1_pets.config:
+
+line 156:
+prev
+fine_tune_checkpoint: "ssd_mobilenet_v1_coco_11_06_2017/model.ckpt"
+new
+fine_tune_checkpoint: "C:/Users/XGOBY/RSAIBot/src/TensorFlow_Models/ssd_mobilenet_v1_coco_11_06_2017/model.ckpt"
+
+
+
+line 176:
+prev
+input_path: "annots/slaying_cows_train.record"
+new
+input_path: "C:/Users/XGOBY/RSAIBot/src/TensorFlow_Models/annots/slaying_cows_train.record"
+
+
+line 178 and 190:
+prev
+label_map_path: "training/object-detection.pbtxt"
+new
+label_map_path: "C:/Users/XGOBY/RSAIBot/src/TensorFlow_Models/training/object-detection.pbtxt"
+
+
+line 188:
+prev
+input_path: "annots/slaying_cows_test.record"
+new
+input_path: "C:/Users/XGOBY/RSAIBot/src/TensorFlow_Models/annots/slaying_cows_test.record"
+
+

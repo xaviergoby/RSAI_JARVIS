@@ -1,0 +1,12 @@
+
+
+
+I] Steps:
+    1) Create a data dir which will have contain various task specific data dirs
+
+
+
+II] Steps:
+
+    1) Modify & reformat all paths for ingesting and saving data
+    2) Modify & refactor gen_csv_and_record_files.py to satisfy changes made in step 1

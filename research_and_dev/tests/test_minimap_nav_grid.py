@@ -1,0 +1,3 @@
+from research_and_dev.event_driven_system.mini_map.minimap_nav_grid import MinimapNavGrid
+
+
