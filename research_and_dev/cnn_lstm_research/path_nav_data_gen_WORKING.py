@@ -1,13 +1,28 @@
 import numpy as np
 import settings
-import keras
-from keras.models import Sequential
-from keras.layers import Conv2D
-from keras.layers import MaxPooling2D
-from keras.layers import LSTM
-from keras.layers import Dense
-from keras.layers import Flatten
-from keras.layers import TimeDistributed
+# import keras
+# import tensorflow as tf
+# from tensorflow import keras
+# from tensorflow.python import keras
+# from tf.layers import Sequential
+from tensorflow.python.keras import Sequential
+from tensorflow.python.keras.layers import Conv2D
+from tensorflow.python.keras.layers import MaxPooling2D
+from tensorflow.python.keras.layers import LSTM
+from tensorflow.python.keras.layers import Dense
+from tensorflow.python.keras.layers import Flatten
+from tensorflow.python.keras.layers import TimeDistributed
+
+
+# from tensorflow.keras.models import Sequential
+# from tensorflow.keras.models import Sequential
+# from keras.models import Sequential
+# from keras.layers import Conv2D
+# from keras.layers import MaxPooling2D
+# from keras.layers import LSTM
+# from keras.layers import Dense
+# from keras.layers import Flatten
+# from keras.layers import TimeDistributed
 from research_and_dev.event_driven_system.nav_data_tools import load_nav_data
 import os
 import settings
@@ -18,7 +33,7 @@ import settings
 # BUT Keras 2.2.5 does not seem to exist!
 
 nav_data_arrays_dir_path = r"C:\Users\Xavier\PycharmProjects\VideoClassificationAndVisualNavigationViaRepresentationLearning\data\event_driven_sys_data\frame_traj_arrays"
-nav_data_arrays = load_nav_data.load_nav_arrays_data(nav_data_arrays_dir_path)
+nav_data_arrays = load_nav_data.load_traj_recs_dataset(nav_data_arrays_dir_path)
 
 
 path_nav_1_data = nav_data_arrays[0]
@@ -105,15 +120,15 @@ size = 60
 height = 60
 width = 60
 channels = 3
-# frames = None
+# traj_frames_dataset = None
 frames = 5
 # define the model
 model = Sequential()
 # A Conv2D layer requires input_shape = (batch_size, width, height, channels)
-# input_shape = (batch_size, # of frames, height, width, channels) <=> (batch_size, samples, height, width, channels)
+# input_shape = (batch_size, # of traj_frames_dataset, height, width, channels) <=> (batch_size, samples, height, width, channels)
 model.add(TimeDistributed(Conv2D(32, (2, 2), activation='relu'), input_shape=(frames, height, width, channels)))
-# Where frames (=samples) is  set to None, so I should be able to feed the network any slice of my long sequence.
-# The shape of the output feature map of the first layer above will be: (batch_size, frames, filter_height, filter_width, filters)
+# Where traj_frames_dataset (=samples) is  set to None, so I should be able to feed the network any slice of my long sequence.
+# The shape of the output feature map of the first layer above will be: (batch_size, traj_frames_dataset, filter_height, filter_width, filters)
 model.add(TimeDistributed(MaxPooling2D(pool_size=(2, 2))))
 model.add(TimeDistributed(Flatten()))
 model.add(LSTM(10))

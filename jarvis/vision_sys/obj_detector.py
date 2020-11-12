@@ -133,7 +133,7 @@ class ObjectDetector: # \\TODO: Renamed from ObjDectInferenceGenSubSystem to Obj
 		current_detections = self._gen_inf_res_dict(img, return_img=return_img)
 		self.current_detections = current_detections
 
-	def get_current_detections(self, img, return_img=True):
+	def get_current_frame_detections(self, img, return_img=True):
 		"""
 		:param img: numpy array of an image
 		:param return_img: whether to return the detect objects superimposed image

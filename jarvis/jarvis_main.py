@@ -22,7 +22,7 @@ if __name__ == "__main__":
 	vision_sys = Vision(game_client_area_roi, max_detections, confidence_threshold, max_obj_frames_lost)
 	obj_dect_sys = Sensor(game_client_area_roi)
 	# obj_dect_sys.run_obj_dect()
-	print(f"obj_dect.current_frame_detections_dict: {obj_denct_sys.current_frame_detections_dict}")
+	print(f"obj_dect.current_frame_detections_dict: {obj_dect_sys.current_frame_detections_dict}")
 
 # //TODO: separate detections frame centroids and sceen centroids calculations
 # //TODO: add detections scores, class labels and frame centroids tracking ability in tracker

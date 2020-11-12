@@ -12,7 +12,7 @@ class Tracker:
 		self.objects = OrderedDict()  # stores ID:Locations
 		self.lost = OrderedDict()  # stores ID:Lost_count
 
-		self.maxLost = maxLost  # maximum number of frames object was not detected.
+		self.maxLost = maxLost  # maximum number of traj_frames_dataset object was not detected.
 
 	def addObject(self, new_object_location):
 		self.objects[self.nextObjectID] = new_object_location  # store new object location

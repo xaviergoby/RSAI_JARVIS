@@ -12,17 +12,17 @@ class CentroidTracker:
 		"""
 		:param roi: a 4-tuple (left, top, width, height) containing info abt the pos and dims of the roi (screen px coords)
 		e.g. roi = (8, 31, 783, 560) if wndw set using the def settings (0, 0, 800, 600)
-		:param max_obj_frames_lost: This is the max # of frames an obj (which is being tracked) is allowed to
+		:param max_obj_frames_lost: This is the max # of traj_frames_dataset an obj (which is being tracked) is allowed to
 		go "missing" for until it is permanently deleted from the tracking "container"/"watchlist" ....
 		"""
 		#
 		# self.next_obj_id : A counter used to assign unique IDs to each object. In the case that an object leaves the frame
-		# and does not come back for max_obj_frames_lost frames, a new (next) object ID would be assigned.
+		# and does not come back for max_obj_frames_lost traj_frames_dataset, a new (next) object ID would be assigned.
 		# self.obj_centroids : A dictionary consisting of object IDs and object centroids (in frame coords) key/value pairs.
 		# E.g.: self.obj_centroids -> {1: np.array([1, 2]), 2:np..array([4, 3]), 3:np..array([6, 2])}
 		# he object ID as the key and the obj frame centroid, (fx_c, fy_C)
-		# self.obj_frames_lost : Maintains number of consecutive frames (value) a particular object ID (key) has been marked as “lost”for
-		# :param max_obj_frames_lost: The number of consecutive frames an object is allowed to be marked as “lost/obj_frames_lost” until we deregister the object.
+		# self.obj_frames_lost : Maintains number of consecutive traj_frames_dataset (value) a particular object ID (key) has been marked as “lost”for
+		# :param max_obj_frames_lost: The number of consecutive traj_frames_dataset an object is allowed to be marked as “lost/obj_frames_lost” until we deregister the object.
 		self.roi = roi
 		self.next_obj_id = 0
 		self.obj_centroids = OrderedDict()
@@ -65,7 +65,7 @@ class CentroidTracker:
 				self.obj_frames_lost[objectID] += 1
 
 				# if we have reached a maximum number of consecutive
-				# frames where a given object has been marked as
+				# traj_frames_dataset where a given object has been marked as
 				# missing, deregister it
 				if self.obj_frames_lost[objectID] > self.max_obj_frames_lost:
 					self.deregister(objectID)
@@ -179,7 +179,7 @@ class CentroidTracker:
 					self.obj_frames_lost[objectID] += 1
 
 					# check to see if the number of consecutive
-					# frames the object has been marked "obj_frames_lost"
+					# traj_frames_dataset the object has been marked "obj_frames_lost"
 					# for warrants deregistering the object
 					if self.obj_frames_lost[objectID] > self.max_obj_frames_lost:
 						self.deregister(objectID)

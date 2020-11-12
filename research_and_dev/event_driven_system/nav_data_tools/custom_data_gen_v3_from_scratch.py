@@ -77,14 +77,14 @@ class DataGenerator:
 
 if __name__ == "__main__":
 	from keras.utils import to_categorical
-	num_frames = 70 # number of frames <=> number of samples
+	num_frames = 70 # number of traj_frames_dataset <=> number of samples
 	frame_height = 60
 	frame_width = 60
 	frame_channels = 3
 	# X = np.random.rand(200, 10, 10, 1)
 	X = np.random.rand(num_frames, frame_height, frame_width, frame_channels) # (70, 60, 60, 3)
 	# y = to_categorical(np.random.randint(0, 2, 200))
-	y = to_categorical(np.random.randint(0, 15*15, num_frames)) # y.shape --> (480, 225) (# of samples/frames, # of ohe cls labels)
+	y = to_categorical(np.random.randint(0, 15*15, num_frames)) # y.shape --> (480, 225) (# of samples/traj_frames_dataset, # of ohe cls labels)
 	input_data = X
 	target_data = y
 	look_back = 7

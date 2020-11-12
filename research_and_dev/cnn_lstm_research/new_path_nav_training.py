@@ -1,13 +1,22 @@
 import numpy as np
 import settings
-import keras
-from keras.models import Sequential
-from keras.layers import Conv2D
-from keras.layers import MaxPooling2D
-from keras.layers import LSTM
-from keras.layers import Dense
-from keras.layers import Flatten
-from keras.layers import TimeDistributed
+# import keras
+# from keras.models import Sequential
+# from keras.layers import Conv2D
+# from keras.layers import MaxPooling2D
+# from keras.layers import LSTM
+# from keras.layers import Dense
+# from keras.layers import Flatten
+# from keras.layers import TimeDistributed
+
+from tensorflow.python.keras import Sequential
+from tensorflow.python.keras.layers import Conv2D
+from tensorflow.python.keras.layers import MaxPooling2D
+from tensorflow.python.keras.layers import Dropout
+from tensorflow.python.keras.layers import LSTM
+from tensorflow.python.keras.layers import Dense
+from tensorflow.python.keras.layers import Flatten
+from tensorflow.python.keras.layers import TimeDistributed
 from research_and_dev.event_driven_system.nav_data_tools import load_nav_data
 import os
 import settings
@@ -18,7 +27,7 @@ import settings
 # BUT Keras 2.2.5 does not seem to exist!
 
 nav_data_arrays_dir_path = r"C:\Users\Xavier\PycharmProjects\VideoClassificationAndVisualNavigationViaRepresentationLearning\data\event_driven_sys_data\frame_traj_arrays"
-nav_data = load_nav_data.load_nav_arrays_data(nav_data_arrays_dir_path)
+nav_data = load_nav_data.load_traj_recs_dataset(nav_data_arrays_dir_path)
 nav_data_arrays = nav_data[0]
 nav_data_arrays_ohe_cls_labels = nav_data[1]
 
@@ -93,27 +102,38 @@ height = 76
 width = 76
 channels = 3
 frames = None
-# frames = 5
-# frames = smallest_path_nav_data_size
+# traj_frames_dataset = 5
+# traj_frames_dataset = smallest_path_nav_data_size
 # define the model
 model = Sequential()
 # A Conv2D layer requires input_shape = (batch_size, width, height, channels)
-# input_shape = (batch_size, # of frames, height, width, channels) <=> (batch_size, samples, height, width, channels)
+# input_shape = (batch_size, # of traj_frames_dataset, height, width, channels) <=> (batch_size, samples, height, width, channels)
 model.add(TimeDistributed(Conv2D(32, (2, 2), activation='relu'), input_shape=(frames, height, width, channels)))
-# Where frames (=samples) is  set to None, so I should be able to feed the network any slice of my long sequence.
-# The shape of the output feature map of the first layer above will be: (batch_size, frames, filter_height, filter_width, filters)
+# Where traj_frames_dataset (=samples) is  set to None, so I should be able to feed the network any slice of my long sequence.
+# The shape of the output feature map of the first layer above will be: (batch_size, traj_frames_dataset, filter_height, filter_width, filters)
 model.add(TimeDistributed(MaxPooling2D(pool_size=(2, 2))))
+
 model.add(TimeDistributed(Flatten()))
-model.add(LSTM(10))
+model.add(TimeDistributed(Dropout(0.5)))
+
+
+# model.add(LSTM(10))
+# model.add(LSTM(38))
+model.add(LSTM(256, return_sequences=False, dropout=0.5))
+
 model.add(Dense(38, activation='softmax'))
-model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['acc'])
+# model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['acc'])
+model.compile(loss='categorical_crossentropy', optimizer='RMSprop', metrics=['acc'])
 print(model.summary())
 
 # fit model on
 # 5,000 randomly generated sequences.
 print("Generating X_train and y_train, and fitting model on this data with batch_size=32 and epochs=5")
 # X_train, y_train = generate_examples(size, 100)
-model.fit(X_train, y_train, batch_size=smallest_path_nav_data_size, epochs=20, verbose=1)
+bs = smallest_path_nav_data_size
+# bs = 100
+eps = 50
+model.fit(X_train, y_train, batch_size=bs, epochs=eps, verbose=1, validation_data=(X_train, y_train))
 
 # print(len(path_nav_1_data))
 # print(len(path_nav_1_data[0]))

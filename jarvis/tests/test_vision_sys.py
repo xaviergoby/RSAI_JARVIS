@@ -36,7 +36,7 @@ if __name__ == "__main__":
 		print("\n")
 		frame = vision.sensor.get_frame() # frame.shape -> (560, 783)
 
-		current_detections = vision.detector.get_current_detections(frame)
+		current_detections = vision.detector.get_current_frame_detections(frame)
 		current_obj_dect_img_res = current_detections["inf_res_img"] # current_obj_dect_img_res.shape -> (560, 783, 3)
 
 		confident_boxes_norm_coords, confident_boxes_scores, confident_boxes_classes = vision.detector.confident_detections(current_detections)

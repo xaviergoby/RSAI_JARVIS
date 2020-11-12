@@ -25,10 +25,10 @@ def next_frame(last_step, last_frame, column):
 	return frame, step
 
 
-# generate a sequence of frames of a dot moving across an image
+# generate a sequence of traj_frames_dataset of a dot moving across an image
 def build_frames(frames_size_and_seq_len):
 	# Create an empty list which will contain
-	# ;en(frames_size_and_seq_len) number of frames as elements.
+	# ;en(frames_size_and_seq_len) number of traj_frames_dataset as elements.
 	frames_list = []
 	# Create an initial (frames_size_and_seq_len x frames_size_and_seq_len) frame
 	# filled with 0's. This is essentially just an (frames_size_and_seq_len x frames_size_and_seq_len)
@@ -58,9 +58,9 @@ def build_frames(frames_size_and_seq_len):
 		line_init_col_idx = frames_size_and_seq_len - 1
 	# Assign the init cell of the frame of the grid of zeros with the value 1!
 	frame[line_init_row_idx, line_init_col_idx] = 1
-	# Append this 1st frame of the sequence of frames to frames_list
+	# Append this 1st frame of the sequence of traj_frames_dataset to frames_list
 	frames_list.append(frame)
-	# Create all the remaining frames (of grids) by drawing the line longer and loger
+	# Create all the remaining traj_frames_dataset (of grids) by drawing the line longer and loger
 	# for each new frame!
 	for frame_i in range(1, frames_size_and_seq_len):
 		line_init_col_idx = frame_i if rightwards_direction else frames_size_and_seq_len - 1 - frame_i
@@ -69,15 +69,15 @@ def build_frames(frames_size_and_seq_len):
 	return frames_list, direction
 
 
-# # generate sequence of frames
+# # generate sequence of traj_frames_dataset
 # size = 5
-# frames, direction = build_frames(size)
-# # plot all frames
+# traj_frames_dataset, direction = build_frames(size)
+# # plot all traj_frames_dataset
 # plt.figure()
 # for i in range(size):
 # 	# create a gray scale subplot for each frame
 # 	plt.subplot(1, size, i + 1)
-# 	plt.imshow(frames[i], cmap='Greys')
+# 	plt.imshow(traj_frames_dataset[i], cmap='Greys')
 # 	# turn of the scale to make it clearer
 # 	ax = plt.gca()
 # 	ax.get_xaxis().set_visible(False)
@@ -88,7 +88,7 @@ def build_frames(frames_size_and_seq_len):
 #
 
 
-# generate multiple sequences of frames and reshape for network input
+# generate multiple sequences of traj_frames_dataset and reshape for network input
 def generate_examples(size, num_rand_gen_seqs):
 	X, y = list(), list()
 	for _ in range(num_rand_gen_seqs):
@@ -109,10 +109,10 @@ frames = None
 # define the model
 model = Sequential()
 # A Conv2D layer requires input_shape = (batch_size, width, height, channels)
-# input_shape = (batch_size, # of frames, height, width, channels) <=> (batch_size, samples, height, width, channels)
+# input_shape = (batch_size, # of traj_frames_dataset, height, width, channels) <=> (batch_size, samples, height, width, channels)
 model.add(TimeDistributed(Conv2D(2, (2,2), activation='relu'), input_shape=(frames, size, size, 1)))
-# Where frames (=samples) is  set to None, so I should be able to feed the network any slice of my long sequence.
-# The shape of the output feature map of the first layer above will be: (batch_size, frames, filter_height, filter_width, filters)
+# Where traj_frames_dataset (=samples) is  set to None, so I should be able to feed the network any slice of my long sequence.
+# The shape of the output feature map of the first layer above will be: (batch_size, traj_frames_dataset, filter_height, filter_width, filters)
 model.add(TimeDistributed(MaxPooling2D(pool_size=(2, 2))))
 model.add(TimeDistributed(Flatten()))
 model.add(LSTM(10))
@@ -131,7 +131,7 @@ model.fit(X_train, y_train, batch_size=32, epochs=5, verbose=1)
 
 # evaluate model on
 # 100 randomly generated sequences.
-print("\nEvalating on 10 randomly generated sequences of frames")
+print("\nEvalating on 10 randomly generated sequences of traj_frames_dataset")
 X_eval, y_eval = generate_examples(size, 10)
 loss, acc = model.evaluate(X_eval, y_eval, verbose=1)
 print('loss: %f, acc: %f' % (loss, acc*100))
@@ -140,7 +140,7 @@ print('loss: %f, acc: %f' % (loss, acc*100))
 
 # prediction on new data on
 # 1 randomly generated sequence.
-print("\nPredicting on 1 randomly generated sequence of frames")
+print("\nPredicting on 1 randomly generated sequence of traj_frames_dataset")
 X_test, y_test = generate_examples(size, 1)
 yhat = model.predict_classes(X_test, verbose=1)
 expected = "Right" if y_test[0]==1 else "Left"
