@@ -44,7 +44,7 @@ Autonomous slaying of cows by the bot with the help of object detection. The Ten
 
 <br>
 
-![slaying_cows_using_obj_dect](assets/RSAI_JARVIS_Media.gif)*Object detection based autonomous NPC slaying at the cow pen near the in-game city/town called Lumbridge*
+![slaying_cows_using_obj_dect](assets/RSAI_JARVIS_Media.gif)*<br>Object detection based autonomous NPC slaying at the cow pen near the in-game city/town called Lumbridge*
 
 <br>
 
@@ -62,7 +62,7 @@ A great and invaluable piece of contribution to project by [Victor Guillet](http
 
 <br>
 
-![slaying_cows_using_obj_dect](assets/RSAI_JARVIS_RL_GUI.gif)*An extensive still-in-development simulation GUI program developped for various purposes. Is currently mainly being used for implementing and testing reinforcement learning algorithms as streamlined and conveniently as possible, in addition to being used as a helpful tool in the quest of solving the problem of autonomous navigation. Credits to [Victor Guillet](https://github.com/vguillet) for his invaluable contribution*
+![slaying_cows_using_obj_dect](assets/RSAI_JARVIS_RL_GUI.gif)*<br>An extensive still-in-development simulation GUI program developped for various purposes. Is currently mainly being used for implementing and testing reinforcement learning algorithms as streamlined and conveniently as possible, in addition to being used as a helpful tool in the quest of solving the problem of autonomous navigation. Credits to [Victor Guillet](https://github.com/vguillet) for his invaluable contribution*
 
 <br>
 
