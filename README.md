@@ -13,17 +13,14 @@
 
 The development of an AI-based video game bot for the Massively Multiplayer Online Role-Playing Game (MMORPG) titled Old School RuneScape, the former redux version of RuneScape (AKA RuneScape 3), developed by the British video game studio, Jagex Limited.
 
-<br>
 
 ## Old School RuneScape & RuneScape (3) <a name="osrs_vs_rs3"></a>
 
 Old School RuneScape, originally named RuneScape, is an improved version of the backed up source code of the version of the game from August 2007. It was brought back on the 22nd of February, 2013, after having been temporally taken down so as to make way for RuneScaoe 3, the third and most recent iteration of the game, launched in July in 2013. Despite this latest HTML5-client based version of the game (RuneScape 3) possessing graphical effects and features far more advanced compared to that of Old School RuneScape, it is this earlier version of the game (OSRS) which happens hosts the largest base of players between the two versions<a href="#osrs_rs3_player_base" id="osrs_rs3_player_base_ref"><sup>1</sup></a>.
 
-<br>
 
 ![RuneScape 3 vs Old School RuneScape comparison](assets/rs3_vs_osrs_comparison_images_combined.jpg "Hello World")*<br>In-game screenshot comparison of both games. RuneScape3 (left), showing a player carrying a longsword and standing amongst a bunch of NPC wizards, a typical scenario for an experienced player. Old School RuneScape (right), showing a new player in combat with a goblin, a standard activity every newly joined player goes through.*
 
-<br>
 
 ### Notable Achievements & Facts <a name="facts_and_achievements+"></a>
 
@@ -34,7 +31,6 @@ Old School RuneScape, originally named RuneScape, is an improved version of the 
 - An anti-botting system, called "ClusterFlutterer", released in an update on the 25th of October, 2012, under the nickname of "Bot-Nuke", eventually 
 lead to the banning of an estimated 98% of all botting accounts, equating approximately to 7.7 million million accounts being banned<a href="#bot_nuke" id="bot_nuke_ref"><sup>2</sup></a>.
 
-<br>
 
 ### Current Capabilities Demonstrations <a name="current_capabilities"></a>
 
@@ -42,11 +38,9 @@ lead to the banning of an estimated 98% of all botting accounts, equating approx
 
 Autonomous slaying of cows by the bot with the help of object detection. The TensorFlow pre-trained model which was used was ssd_mobilenet_v1_coco and it was trained on a dataset of images and PASCAL VOC format annotations, created using [LabelImg](https://github.com/tzutalin/labelImg).
 
-<br>
 
 ![slaying_cows_using_obj_dect](assets/RSAI_JARVIS_Media.gif)*<br>Object detection based autonomous NPC slaying at the cow pen near the in-game city/town called Lumbridge*
 
-<br>
 
 #### Simulation Environment GUI Software <a name="sim_env_gui_sw"></a>
 
@@ -60,11 +54,9 @@ An extensive still-in-development simulation GUI program developed for various p
 
 A great and invaluable piece of contribution to project by [Victor Guillet](https://github.com/vguillet).
 
-<br>
 
 ![slaying_cows_using_obj_dect](assets/RSAI_JARVIS_RL_GUI.gif)*<br>An extensive still-in-development simulation GUI program developped for various purposes. Is currently mainly being used for implementing and testing reinforcement learning algorithms as streamlined and conveniently as possible, in addition to being used as a helpful tool in the quest of solving the problem of autonomous navigation. Credits to [Victor Guillet](https://github.com/vguillet) for his invaluable contribution*
 
-<br>
 
 ### Autonomous Navigation Problem Potential Solutions & Key Topics<a name="auto_nav_prob_potential_sols"></a>
 
