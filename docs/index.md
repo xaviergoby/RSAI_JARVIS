@@ -64,11 +64,9 @@ A great and invaluable piece of contribution to project by [Victor Guillet](http
 
 ### OSRS Game Client Window & User-Interface Components
 
-<img src="assets/OSRS_Game_Client_Window_&_User-Interface_Components.png"  width="400" height="300">
 
+![osrs_game_client_window_and_ui_components](assets/OSRS_Game_Client_Window_and_User-Interface_Components.png)*<br>Object detection based autonomous NPC slaying at the cow pen near the in-game city/town called Lumbridge*
 
-![osrs_game_client_window_and_ui_components](assets/OSRS_Game_Client_Window_&_User-Interface_Components.png)*<br>Object detection based autonomous NPC slaying at the cow pen near the in-game city/town called Lumbridge*
-\
 
 
 ### Autonomous Navigation Problem Potential Solutions & Key Topics<a name="auto_nav_prob_potential_sols"></a>
