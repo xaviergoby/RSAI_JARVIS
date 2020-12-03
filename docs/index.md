@@ -1,3 +1,8 @@
+---
+layout: default
+---
+
+
 # RuneScape - Artificial Intelligence (RSAI) Bot<a href="#rsai_proj_title_note" id="rsai_proj_title_note_ref"><sup>*</sup></a>
 
 ## Contents
