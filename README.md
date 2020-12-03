@@ -5,8 +5,8 @@
 2. [Old School RuneScape & RuneScape (3)](#osrs_vs_rs3)<br>
 3. [Notable Achievements & Facts](#facts_and_achievements)<br>
 4. [Current Capabilities Demonstrations](#current_capabilities)<br>
-    4.1) [Environmental Interaction Using Object Detection](#env_interaction)<br>
-    4.2) [Simulation Environment GUI Software](#sim_env_gui_sw)<br>
+    4.1 [Environmental Interaction Using Object Detection](#env_interaction)<br>
+    4.2 [Simulation Environment GUI Software](#sim_env_gui_sw)<br>
 4. [Autonomous Navigation Problem Potential Solutions & Key Topics](#auto_nav_prob_potential_sols)<br>
 
 ## Goal <a name="goal"></a>
@@ -57,6 +57,12 @@ A great and invaluable piece of contribution to project by [Victor Guillet](http
 
 ![slaying_cows_using_obj_dect](assets/RSAI_JARVIS_RL_GUI.gif)*<br>An extensive still-in-development simulation GUI program developped for various purposes. Is currently mainly being used for implementing and testing reinforcement learning algorithms as streamlined and conveniently as possible, in addition to being used as a helpful tool in the quest of solving the problem of autonomous navigation. Credits to [Victor Guillet](https://github.com/vguillet) for his invaluable contribution*
 
+### OSRS Game Client Window & User-Interface Components
+
+
+![osrs_game_client_window_and_ui_components](assets/OSRS_Game_Client_Window_&_User-Interface_Components.png)*<br>Object detection based autonomous NPC slaying at the cow pen near the in-game city/town called Lumbridge*
+
+
 
 ### Autonomous Navigation Problem Potential Solutions & Key Topics<a name="auto_nav_prob_potential_sols"></a>
 
@@ -91,6 +97,7 @@ A great and invaluable piece of contribution to project by [Victor Guillet](http
 <br>
 <br>
 <br>
+
 
 ---
 
