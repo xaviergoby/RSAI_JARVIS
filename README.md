@@ -1,125 +1,174 @@
-# RuneScape - Artificial Intelligence (RSAI) Bot<a href="#rsai_proj_title_note" id="rsai_proj_title_note_ref"><sup>*</sup></a>
+[comment]: <> ([comment]: <> &#40;# RuneScape - Artificial Intelligence &#40;RSAI&#41; Bot<a href="#rsai_proj_title_note" id="rsai_proj_title_note_ref"><sup>*</sup></a>&#41;)
 
-## Contents
-1. [Goal](#goal)<br>
-2. [Old School RuneScape & RuneScape (3)](#osrs_vs_rs3)<br>
-3. [Notable Achievements & Facts](#facts_and_achievements)<br>
-4. [Current Capabilities Demonstrations](#current_capabilities)<br>
-    4.1 [Environmental Interaction Using Object Detection](#env_interaction)<br>
-    4.2 [Simulation Environment GUI Software](#sim_env_gui_sw)<br>
-4. [Autonomous Navigation Problem Potential Solutions & Key Topics](#auto_nav_prob_potential_sols)<br>
+[comment]: <> (## Contents)
 
-## Goal <a name="goal"></a>
+[comment]: <> (1. [Goal]&#40;#goal&#41;<br>)
 
-The development of an AI-based video game bot for the Massively Multiplayer Online Role-Playing Game (MMORPG) titled Old School RuneScape, the former redux version of RuneScape (AKA RuneScape 3), developed by the British video game studio, Jagex Limited.
+[comment]: <> (2. [Old School RuneScape & RuneScape &#40;3&#41;]&#40;#osrs_vs_rs3&#41;<br>)
 
+[comment]: <> (3. [Notable Achievements & Facts]&#40;#facts_and_achievements&#41;<br>)
 
-## Old School RuneScape & RuneScape (3) <a name="osrs_vs_rs3"></a>
+[comment]: <> (4. [Current Capabilities Demonstrations]&#40;#current_capabilities&#41;<br>)
 
-Old School RuneScape, originally named RuneScape, is an improved version of the backed up source code of the version of the game from August 2007. It was brought back on the 22nd of February, 2013, after having been temporally taken down so as to make way for RuneScaoe 3, the third and most recent iteration of the game, launched in July in 2013. Despite this latest HTML5-client based version of the game (RuneScape 3) possessing graphical effects and features far more advanced compared to that of Old School RuneScape, it is this earlier version of the game (OSRS) which happens hosts the largest base of players between the two versions<a href="#osrs_rs3_player_base" id="osrs_rs3_player_base_ref"><sup>1</sup></a>.
+[comment]: <> (    4.1 [Environmental Interaction Using Object Detection]&#40;#env_interaction&#41;<br>)
 
+[comment]: <> (    4.2 [Simulation Environment GUI Software]&#40;#sim_env_gui_sw&#41;<br>)
 
-![RuneScape 3 vs Old School RuneScape comparison](assets/rs3_vs_osrs_comparison_images_combined.jpg "Hello World")*<br>In-game screenshot comparison of both games. RuneScape3 (left), showing a player carrying a longsword and standing amongst a bunch of NPC wizards, a typical scenario for an experienced player. Old School RuneScape (right), showing a new player in combat with a goblin, a standard activity every newly joined player goes through.*
+[comment]: <> (4. [Autonomous Navigation Problem Potential Solutions & Key Topics]&#40;#auto_nav_prob_potential_sols&#41;<br>)
 
+[comment]: <> (## Goal <a name="goal"></a>)
 
-### Notable Achievements & Facts <a name="facts_and_achievements+"></a>
+[comment]: <> (The development of an AI-based video game bot for the Massively Multiplayer Online Role-Playing Game &#40;MMORPG&#41; titled Old School RuneScape, the former redux version of RuneScape &#40;AKA RuneScape 3&#41;, developed by the British video game studio, Jagex Limited.)
 
 
-- Guinness World Records award for the ["Most users of an MMO videogame"](https://www.guinnessworldrecords.com/world-records/105537-most-users-of-an-mmo-videogame) with a reported number of over 254,994,744 player accounts having been created since the game was first launched back in 2001.
-- Guinness World Records award for the ["Most prolifically updated MMORPG videogame"](https://www.guinnessworldrecords.com/world-records/most-prolifically-updated-mmorpg) reportedly having been updated once a week on average for a total number of updates greater than 1,014 since the games initial launch.
-- Guinness World Records award for the ["Greatest aggregate time playing an MMO or MMORPG videogame (all players)"](https://www.guinnessworldrecords.com/world-records/most-popular-free-mmorpg) for having a total aggregate number of minuets of player game time spent exceeding 443 billion, counting as of 27 July 2012.
-- An anti-botting system, called "ClusterFlutterer", released in an update on the 25th of October, 2012, under the nickname of "Bot-Nuke", eventually 
-lead to the banning of an estimated 98% of all botting accounts, equating approximately to 7.7 million million accounts being banned<a href="#bot_nuke" id="bot_nuke_ref"><sup>2</sup></a>.
+[comment]: <> (## Old School RuneScape & RuneScape &#40;3&#41; <a name="osrs_vs_rs3"></a>)
+
+[comment]: <> (Old School RuneScape, originally named RuneScape, is an improved version of the backed up source code of the version of the game from August 2007. It was brought back on the 22nd of February, 2013, after having been temporally taken down so as to make way for RuneScaoe 3, the third and most recent iteration of the game, launched in July in 2013. Despite this latest HTML5-client based version of the game &#40;RuneScape 3&#41; possessing graphical effects and features far more advanced compared to that of Old School RuneScape, it is this earlier version of the game &#40;OSRS&#41; which happens hosts the largest base of players between the two versions<a href="#osrs_rs3_player_base" id="osrs_rs3_player_base_ref"><sup>1</sup></a>.)
 
 
-### Current Capabilities Demonstrations <a name="current_capabilities"></a>
-
-#### Environmental Interaction Using Object Detection <a name="env_interaction"></a>
-
-Autonomous slaying of cows by the bot with the help of object detection. The TensorFlow pre-trained model which was used was ssd_mobilenet_v1_coco and it was trained on a dataset of images and PASCAL VOC format annotations, created using [LabelImg](https://github.com/tzutalin/labelImg).
+[comment]: <> (![RuneScape 3 vs Old School RuneScape comparison]&#40;assets/rs3_vs_osrs_comparison_images_combined.jpg "Hello World"&#41;*<br>In-game screenshot comparison of both games. RuneScape3 &#40;left&#41;, showing a player carrying a longsword and standing amongst a bunch of NPC wizards, a typical scenario for an experienced player. Old School RuneScape &#40;right&#41;, showing a new player in combat with a goblin, a standard activity every newly joined player goes through.*)
 
 
-![slaying_cows_using_obj_dect](assets/RSAI_JARVIS_Media.gif)*<br>Object detection based autonomous NPC slaying at the cow pen near the in-game city/town called Lumbridge*
-
-<br>
-
-![osrs_game_client_window_and_ui_components](assets/Edited_RSAI_Jarvis_Hobbes_Mining_Copy.gif)*<br>
-Object detection based autonomous resource gathering at the mines south of Lumbridge*
-
-<br>
-
-#### Simulation Environment GUI Software <a name="sim_env_gui_sw"></a>
-
-An extensive still-in-development simulation GUI program developed for various purposes. Some of these are:
-
-- Use of as a controllable & deterministic simulation environment.
-- Implementation & testing of reinforcement learning algorithms.
-- Assistive experimentation tool for autonomous navigation.
-- Investigation of various planning & decision making algorithms.
-- Validation & verification of implementations prior to integration with the system. 
-
-A great and invaluable piece of contribution to project by [Victor Guillet](https://github.com/vguillet).
+[comment]: <> (### Notable Achievements & Facts <a name="facts_and_achievements+"></a>)
 
 
-![slaying_cows_using_obj_dect](assets/RSAI_JARVIS_RL_GUI.gif)*<br>An extensive still-in-development simulation GUI program developped for various purposes. Is currently mainly being used for implementing and testing reinforcement learning algorithms as streamlined and conveniently as possible, in addition to being used as a helpful tool in the quest of solving the problem of autonomous navigation. Credits to [Victor Guillet](https://github.com/vguillet) for his invaluable contribution*
+[comment]: <> (- Guinness World Records award for the ["Most users of an MMO videogame"]&#40;https://www.guinnessworldrecords.com/world-records/105537-most-users-of-an-mmo-videogame&#41; with a reported number of over 254,994,744 player accounts having been created since the game was first launched back in 2001.)
 
-### OSRS Game Client Window & User-Interface Components
+[comment]: <> (- Guinness World Records award for the ["Most prolifically updated MMORPG videogame"]&#40;https://www.guinnessworldrecords.com/world-records/most-prolifically-updated-mmorpg&#41; reportedly having been updated once a week on average for a total number of updates greater than 1,014 since the games initial launch.)
 
+[comment]: <> (- Guinness World Records award for the ["Greatest aggregate time playing an MMO or MMORPG videogame &#40;all players&#41;"]&#40;https://www.guinnessworldrecords.com/world-records/most-popular-free-mmorpg&#41; for having a total aggregate number of minuets of player game time spent exceeding 443 billion, counting as of 27 July 2012.)
 
-![osrs_game_client_window_and_ui_components](assets/OSRS_Game_Client_Window_and_User_Interface_Components.png)*<br>Object detection based autonomous NPC slaying at the cow pen near the in-game city/town called Lumbridge*
+[comment]: <> (- An anti-botting system, called "ClusterFlutterer", released in an update on the 25th of October, 2012, under the nickname of "Bot-Nuke", eventually )
 
-
-### Autonomous Navigation Problem Potential Solutions & Key Topics<a name="auto_nav_prob_potential_sols"></a>
-
-- Iterative Closest Point (ICP) algorithm
-- End-to-end (E2E) Deep Learning (DL)
-    - CNN2-LSTM Network
-    - [SuperPoint](https://github.com/rpautrat/SuperPoint) network
-    - Hierarchical Scene Coordinate network [(hscnet)](https://github.com/AaltoVision/hscnet) for coordinate classification (& regression?) for visual localisation
-    - [Hierarchical Localisation](https://github.com/cvg/Hierarchical-Localization) network
-- Extended Kalman Filter (EKF)
-- Dead Reckoning
-- Topological (visual) graphs & maps
-- View graphs (& maps)
-- Optical flow
-- Key points
-- Global & local feature descriptors
-- Simultaneous Localisation And Mapping (SLAM)
-    - Occupancy Grid SLAM
-    - GraphSLAM
-    - RGB-D SLAM
+[comment]: <> (lead to the banning of an estimated 98% of all botting accounts, equating approximately to 7.7 million million accounts being banned<a href="#bot_nuke" id="bot_nuke_ref"><sup>2</sup></a>.)
 
 
+[comment]: <> (### Current Capabilities Demonstrations <a name="current_capabilities"></a>)
 
-### Navigation & Simultaneous Localization And Mapping (SLAM)
+[comment]: <> (#### Environmental Interaction Using Object Detection <a name="env_interaction"></a>)
 
-#### Place to Place Navigation (P2PNav)
-Flow of steps:
-- **Starting Place**: Set starting place (global) Main Map loc coordinates 
-- **Along Path/Trajectory**: 
-  - 1st) Convert A* generated (global) Main Map displacements to mini map (mm) screen pixel pos coords.
-  - 2nd) Use generated mm screen pixel pos coords for Left Mouse Button actuator clicks. 
+[comment]: <> (Autonomous slaying of cows by the bot with the help of object detection. The TensorFlow pre-trained model which was used was ssd_mobilenet_v1_coco and it was trained on a dataset of images and PASCAL VOC format annotations, created using [LabelImg]&#40;https://github.com/tzutalin/labelImg&#41;.)
 
 
+[comment]: <> (![slaying_cows_using_obj_dect]&#40;assets/RSAI_JARVIS_Media.gif&#41;*<br>Object detection based autonomous NPC slaying at the cow pen near the in-game city/town called Lumbridge*)
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+[comment]: <> (<br>)
+
+[comment]: <> (![osrs_game_client_window_and_ui_components]&#40;assets/Edited_RSAI_Jarvis_Hobbes_Mining_Copy.gif&#41;*<br>)
+
+[comment]: <> (Object detection based autonomous resource gathering at the mines south of Lumbridge*)
+
+[comment]: <> (<br>)
+
+[comment]: <> (#### Simulation Environment GUI Software <a name="sim_env_gui_sw"></a>)
+
+[comment]: <> (An extensive still-in-development simulation GUI program developed for various purposes. Some of these are:)
+
+[comment]: <> (- Use of as a controllable & deterministic simulation environment.)
+
+[comment]: <> (- Implementation & testing of reinforcement learning algorithms.)
+
+[comment]: <> (- Assistive experimentation tool for autonomous navigation.)
+
+[comment]: <> (- Investigation of various planning & decision making algorithms.)
+
+[comment]: <> (- Validation & verification of implementations prior to integration with the system. )
+
+[comment]: <> (A great and invaluable piece of contribution to project by [Victor Guillet]&#40;https://github.com/vguillet&#41;.)
 
 
----
+[comment]: <> (![slaying_cows_using_obj_dect]&#40;assets/RSAI_JARVIS_RL_GUI.gif&#41;*<br>An extensive still-in-development simulation GUI program developped for various purposes. Is currently mainly being used for implementing and testing reinforcement learning algorithms as streamlined and conveniently as possible, in addition to being used as a helpful tool in the quest of solving the problem of autonomous navigation. Credits to [Victor Guillet]&#40;https://github.com/vguillet&#41; for his invaluable contribution*)
 
-<a id="rsai_proj_title_note" href="#rsai_proj_title_note_ref"><sup>*</sup></a>More accurately, Old School RuneScape Artificial Intelligence, OSRS-AI, Bot
-<br>
-<a href="#osrs_rs3_player_base" id="osrs_rs3_player_base_ref"><sup>1</sup></a>[Old School RuneScape
- Official Wiki Webpage](https://oldschool.runescape.wiki/w/Old_School_RuneScape )
- <br>
-<a id="bot_nuke" href="#bot_nuke_ref"><sup>2</sup></a>[Runescape bot nuking event bans 1.5 million bots in one day](https://www.pcgamer.com/runescape-bot-nuking-event-bans-1-5-million-bots-in-one-day/)
-<br>
+[comment]: <> (### OSRS Game Client Window & User-Interface Components)
+
+
+[comment]: <> (![osrs_game_client_window_and_ui_components]&#40;assets/OSRS_Game_Client_Window_and_User_Interface_Components.png&#41;*<br>Object detection based autonomous NPC slaying at the cow pen near the in-game city/town called Lumbridge*)
+
+
+[comment]: <> (### Autonomous Navigation Problem Potential Solutions & Key Topics<a name="auto_nav_prob_potential_sols"></a>)
+
+[comment]: <> (- Iterative Closest Point &#40;ICP&#41; algorithm)
+
+[comment]: <> (- End-to-end &#40;E2E&#41; Deep Learning &#40;DL&#41;)
+
+[comment]: <> (    - CNN2-LSTM Network)
+
+[comment]: <> (    - [SuperPoint]&#40;https://github.com/rpautrat/SuperPoint&#41; network)
+
+[comment]: <> (    - Hierarchical Scene Coordinate network [&#40;hscnet&#41;]&#40;https://github.com/AaltoVision/hscnet&#41; for coordinate classification &#40;& regression?&#41; for visual localisation)
+
+[comment]: <> (    - [Hierarchical Localisation]&#40;https://github.com/cvg/Hierarchical-Localization&#41; network)
+
+[comment]: <> (- Extended Kalman Filter &#40;EKF&#41;)
+
+[comment]: <> (- Dead Reckoning)
+
+[comment]: <> (- Topological &#40;visual&#41; graphs & maps)
+
+[comment]: <> (- View graphs &#40;& maps&#41;)
+
+[comment]: <> (- Optical flow)
+
+[comment]: <> (- Key points)
+
+[comment]: <> (- Global & local feature descriptors)
+
+[comment]: <> (- Simultaneous Localisation And Mapping &#40;SLAM&#41;)
+
+[comment]: <> (    - Occupancy Grid SLAM)
+
+[comment]: <> (    - GraphSLAM)
+
+[comment]: <> (    - RGB-D SLAM)
+
+
+
+[comment]: <> (### Navigation & Simultaneous Localization And Mapping &#40;SLAM&#41;)
+
+[comment]: <> (#### Place to Place Navigation &#40;P2PNav&#41;)
+
+[comment]: <> (Flow of steps:)
+
+[comment]: <> (- **Starting Place**: Set starting place &#40;global&#41; Main Map loc coordinates )
+
+[comment]: <> (- **Along Path/Trajectory**: )
+
+[comment]: <> (  - 1st&#41; Convert A* generated &#40;global&#41; Main Map displacements to mini map &#40;mm&#41; screen pixel pos coords.)
+
+[comment]: <> (  - 2nd&#41; Use generated mm screen pixel pos coords for Left Mouse Button actuator clicks. )
+
+
+
+[comment]: <> (<br>)
+
+[comment]: <> (<br>)
+
+[comment]: <> (<br>)
+
+[comment]: <> (<br>)
+
+[comment]: <> (<br>)
+
+[comment]: <> (<br>)
+
+[comment]: <> (<br>)
+
+
+[comment]: <> (---)
+
+[comment]: <> (<a id="rsai_proj_title_note" href="#rsai_proj_title_note_ref"><sup>*</sup></a>More accurately, Old School RuneScape Artificial Intelligence, OSRS-AI, Bot)
+
+[comment]: <> (<br>)
+
+[comment]: <> (<a href="#osrs_rs3_player_base" id="osrs_rs3_player_base_ref"><sup>1</sup></a>[Old School RuneScape)
+
+[comment]: <> ( Official Wiki Webpage]&#40;https://oldschool.runescape.wiki/w/Old_School_RuneScape &#41;)
+
+[comment]: <> ( <br>)
+
+[comment]: <> (<a id="bot_nuke" href="#bot_nuke_ref"><sup>2</sup></a>[Runescape bot nuking event bans 1.5 million bots in one day]&#40;https://www.pcgamer.com/runescape-bot-nuking-event-bans-1-5-million-bots-in-one-day/&#41;)
+
+[comment]: <> (<br>)
 
 
 
