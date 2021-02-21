@@ -129,7 +129,7 @@ class HardwareEventsListener:
 
 
 if __name__ == "__main__":
-	l = Actuators()
+	l = HardwareEventsListener()
 	time_tools.delay_timer(3)
 	l.init_all_states()
 	while True:

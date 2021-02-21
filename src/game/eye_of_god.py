@@ -32,12 +32,12 @@ print(txt)
 # im = enhancer.enhance(2)
 # im = im.convert('1')
 # im.save("wc_obj_dect_3_TLC2_2.jpg")
-# text = pytesseract.image_to_string(Image.open("wc_obj_dect_3_TLC2_2.jpg"))
-# print(text)
+# obj_id_info = pytesseract.image_to_string(Image.open("wc_obj_dect_3_TLC2_2.jpg"))
+# print(obj_id_info)
 
 
 # def ocr_core(filename):
-#     text = pytesseract.image_to_string(Image.open(filename))
-#     return text
+#     obj_id_info = pytesseract.image_to_string(Image.open(filename))
+#     return obj_id_info
 
 # print(ocr_core("wc_obj_dect_3_TLC.jpg"))

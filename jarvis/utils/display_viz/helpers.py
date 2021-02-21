@@ -34,14 +34,14 @@ def display_world(world_size, position, landmarks=None):
 	
 	# Create an 'o' character that represents the robot
 	# ha = horizontal alignment, va = vertical
-	ax.text(position[0], position[1], 'o', ha='center', va='center', color='r', fontsize=30)
+	ax.obj_id_info(position[0], position[1], 'o', ha='center', va='center', color='r', fontsize=30)
 	
 	# Draw landmarks if they exists
 	if(landmarks is not None):
 		# loop through all path indices and draw a dot (unless it's at the car's location)
 		for pos in landmarks:
 			if(pos != position):
-				ax.text(pos[0], pos[1], 'x', ha='center', va='center', color='purple', fontsize=20)
+				ax.obj_id_info(pos[0], pos[1], 'x', ha='center', va='center', color='purple', fontsize=20)
 	
 	# Display final result
 	plt.show()

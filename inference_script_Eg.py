@@ -127,8 +127,8 @@ def draw_boxes_and_save(image, output_path, box_data):
         coords = box['coordinates']
         coordinates = {'left': coords['x0'], 'right': coords['x1'],
                        'top': coords['y0'], 'bottom': coords['y1']}
-        text_objects = [{'text': box['label'], 'position': 'top'},
-                       {'text': 'score: {}%'.format(box['confidence']), 'position': 'bottom'}]
+        text_objects = [{'obj_id_info': box['label'], 'position': 'top'},
+                       {'obj_id_info': 'score: {}%'.format(box['confidence']), 'position': 'bottom'}]
         boxes.append({'coordinates': coordinates, 'textObjects': text_objects})
     request['boundingBoxes'] = boxes
     temp_image = client.algo(BOUNDING_BOX_ALGO).pipe(request).result['output']

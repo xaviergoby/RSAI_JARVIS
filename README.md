@@ -86,7 +86,14 @@ A great and invaluable piece of contribution to project by [Victor Guillet](http
 
 
 
+### Navigation & Simultaneous Localization And Mapping (SLAM)
 
+#### Place to Place Navigation (P2PNav)
+Flow of steps:
+- **Starting Place**: Set starting place (global) Main Map loc coordinates 
+- **Along Path/Trajectory**: 
+  - 1st) Convert A* generated (global) Main Map displacements to mini map (mm) screen pixel pos coords.
+  - 2nd) Use generated mm screen pixel pos coords for Left Mouse Button actuator clicks. 
 
 
 

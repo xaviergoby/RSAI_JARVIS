@@ -8,7 +8,7 @@ import pandas as pd
 
 class CentroidTracker:
 
-	def __init__(self, roi: "(l, t, w, h) tuple", max_obj_frames_lost):
+	def __init__(self, roi: "(l, t, w, h) tuple", img_dims, max_obj_frames_lost):
 		"""
 		:param roi: a 4-tuple (left, top, width, height) containing info abt the pos and dims of the roi (screen px coords)
 		e.g. roi = (8, 31, 783, 560) if wndw set using the def settings (0, 0, 800, 600)
@@ -24,6 +24,7 @@ class CentroidTracker:
 		# self.obj_frames_lost : Maintains number of consecutive traj_frames_dataset (value) a particular object ID (key) has been marked as “lost”for
 		# :param max_obj_frames_lost: The number of consecutive traj_frames_dataset an object is allowed to be marked as “lost/obj_frames_lost” until we deregister the object.
 		self.roi = roi
+		self.img_dims = img_dims
 		self.next_obj_id = 0
 		self.obj_centroids = OrderedDict()
 		self.obj_frames_lost = OrderedDict()
@@ -198,6 +199,9 @@ class CentroidTracker:
 		return self.obj_centroids
 
 	def get_current_tracking_objs_centroids(self):
+		"""
+		:return: a collections.OrderedDict w/ detected obj ID/screen relative centroid pos coordinates as key/val pairs
+		"""
 		return self.obj_centroids
 
 	def get_current_tracking_objects(self):
@@ -215,12 +219,38 @@ class CentroidTracker:
 			                                                          tracked_obj_i_class_label]
 		return tracked_objs_metadata_dict
 
-
+	def compute_objs_centroid_ds_vectors(self):
+		frame_centre_x_coord = self.img_dims[0] // 2
+		frame_centre_y_coord = self.img_dims[1] // 2
+		objects_centroids = self.get_current_tracking_objects()
+		tracked_objects_unique_ids = list(objects_centroids.keys())
+		tracked_objs_metadata_dict = OrderedDict()
+		for tracked_object_i_unique_id in tracked_objects_unique_ids:
+			tracked_obj_i_centroid = objects_centroids[tracked_object_i_unique_id]
+			print(f"tracked_obj_i_centroid[0] {tracked_obj_i_centroid[0]}")
+			bbox_i_centroid_x_coord, bbox_i_centroid_y_coord = tracked_obj_i_centroid[0]
+			if bbox_i_centroid_x_coord > frame_centre_x_coord:
+				bbox_i_lrf_dx = bbox_i_centroid_x_coord - frame_centre_x_coord
+			else:
+				bbox_i_lrf_dx = bbox_i_centroid_x_coord - frame_centre_x_coord
+			if bbox_i_centroid_y_coord > frame_centre_y_coord:
+				bbox_i_lrf_dy = bbox_i_centroid_y_coord - frame_centre_y_coord
+			else:
+				bbox_i_lrf_dy = bbox_i_centroid_y_coord - frame_centre_y_coord
+			tracked_objs_metadata_dict[tracked_object_i_unique_id] = [int(bbox_i_lrf_dx/65), int(bbox_i_lrf_dy//58)]
+		return tracked_objs_metadata_dict
 
 	def compute_lrf_ds_vectors(self):
+		"""
+		lrs: Local Reference Frame
+		ds: Distance
+		:return: a numpy.ndarray containing the local reference frame distance vectors of the detected objects
+		"""
 		frame_width, frame_height = self.roi[2], self.roi[3]
 		obj_centroid_keys = list(self.obj_centroids.keys())
 		obj_centroid_lrf_coords = list(self.obj_centroids.values())
+		print(f"~~~~~type(obj_centroid_lrf_coords): {type(obj_centroid_lrf_coords)}")
+		print(f"~~~~~obj_centroid_lrf_coords: {obj_centroid_lrf_coords}")
 		frame_origin_coords = np.array([[int(frame_width/2), int(frame_height/2)]])
 		obj_centroid_lrf_coords_array = np.array(obj_centroid_lrf_coords)
 		# print(f"obj_centroid_lrf_coords_array.shape: {obj_centroid_lrf_coords_array.shape}")
@@ -228,6 +258,6 @@ class CentroidTracker:
 		# print(f"obj_centroid_lrf_coords_array: {obj_centroid_lrf_coords_array}")
 		# print(f"frame_origin_coords: {frame_origin_coords}")
 		obj_centroids_lrf_ds_vectors = np.array([obj_centroid_lrf_coords]) - frame_origin_coords
+		obj_centroids_lrf_ds_vectors = obj_centroids_lrf_ds_vectors[0]
 		return obj_centroids_lrf_ds_vectors
-		
 		

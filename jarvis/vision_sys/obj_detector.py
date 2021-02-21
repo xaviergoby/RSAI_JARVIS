@@ -11,11 +11,12 @@ import math
 
 class ObjectDetector: # \\TODO: Renamed from ObjDectInferenceGenSubSystem to ObjectDetector
 
-	def __init__(self, roi, max_detections, confidence_threshold):
+	def __init__(self, roi, img_dims, max_detections, confidence_threshold):
 		sys.path.append("..")
 		# self.task_name = task_name
 		self.task_name = "mining"
 		self.roi = roi
+		self.img_dims = img_dims
 		self.img_height = None
 		self.img_width = None
 		self.max_detections = max_detections
@@ -161,7 +162,8 @@ class ObjectDetector: # \\TODO: Renamed from ObjDectInferenceGenSubSystem to Obj
 	def confident_detections(self, detections):
 		"""
 		:param detections:
-		:return:
+		:return: a 3-tuple (confident boxes normed coords, confident boxes scores, confident boxes classes)
+		having types (<class 'numpy.ndarray'>, <class 'numpy.ndarray'>, <class 'numpy.ndarray'>)
 		"""
 		# inf_res_dict = {}
 		# img_inf_res_key_names = ["norm_boxes", "obj_scores", "classes"]
@@ -193,7 +195,7 @@ class ObjectDetector: # \\TODO: Renamed from ObjDectInferenceGenSubSystem to Obj
 
 	def compute_boxes_frame_coords(self, boxes_norm_coords: "numpy array w/ shape (len(boxes_norm_coords), 4)") -> "list of nested [top, left, bottom, right] list":
 		"""
-		:param boxes_norm_coords: "numpy array w/ shape (len(boxes_norm_coords),4)"
+		:param boxes_norm_coords: "numpy array w/ shape (len(boxes_norm_coords),4)" containing the normed centroid coordinates of the detected objects
 		:return: list of nested [top, left, bottom, right] lists
 		"""
 		boxes_frame_coords_list = []
@@ -204,14 +206,18 @@ class ObjectDetector: # \\TODO: Renamed from ObjDectInferenceGenSubSystem to Obj
 
 
 	def compute_bbox_frame_centroid(self, bbox_frame_coords: "list [top, left, bottom, right]"):
+		"""
+		:param bbox_frame_coords: a list [top, left, bottom, right] containing the normed centroid coordinates of the detected objects
+		:return: a list containing the computed centroids coordinates of the detected objects
+		"""
 		top, left, bottom, right = bbox_frame_coords
-		print(f"(top, left, bottom, right): {(top, left, bottom, right)}")
+		# print(f"(top, left, bottom, right): {(top, left, bottom, right)}")
 		# bbox_fxc = math.ceil((right - left) / 2)
 		# bbox_fyc = math.ceil((bottom - top) / 2)
 		# print(f"(bbox_fxc, bbox_fyc): {(bbox_fxc, bbox_fyc)}")
 		bbox_fxc = (right - left) // 2 + left
 		bbox_fyc = (bottom - top) // 2 + top
-		print(f"(bbox_fxc, bbox_fyc): {(bbox_fxc, bbox_fyc)}")
+		# print(f"(bbox_fxc, bbox_fyc): {(bbox_fxc, bbox_fyc)}")
 		bbox_centroid_in_frame = [bbox_fxc, bbox_fyc]
 		# bbox_centroid_in_frame = [bbox_fxc, bbox_fyc]
 		return bbox_centroid_in_frame
@@ -241,7 +247,7 @@ class ObjectDetector: # \\TODO: Renamed from ObjDectInferenceGenSubSystem to Obj
 
 	def compute_single_inf_obj_bbox_centre_screen_coords(self, obj_bbox_norm_coords):
 		"""
-		:param obj_bbox_norm_coords: np arra, [norm_y_min, norm_x_min, norm_y_max, norm_x_max]
+		:param obj_bbox_norm_coords: np array, [norm_y_min, norm_x_min, norm_y_max, norm_x_max]
 		:return: 2-tuple (inf_obj_bbox_screen_centre_y_coord, inf_obj_bbox_screen_centre_x_coord)
 		"""
 		# frame_height = self.img_height
@@ -254,15 +260,47 @@ class ObjectDetector: # \\TODO: Renamed from ObjDectInferenceGenSubSystem to Obj
 		x_min, x_max = int(norm_x_min * self.img_width), int(norm_x_max * self.img_width)
 		y_c = (y_max - y_min) // 2 + y_min + self.roi[1]
 		x_c = (x_max - x_min) // 2 + x_min + self.roi[0]
+		# print(f"Mathematical operation performed in ObjectDetect.compute_single_inf_obj_bbox_centre_screen_coords")
+		# print(f"y_c = (y_max-y_min) // 2 + y_min + self.roi[1]: {y_c} = ({y_max}-{y_min}) // 2 + {y_min} + {self.roi[1]}")
+		# print(f"x_c = (x_max-x_min) // 2 + x_min + self.roi[0]: {x_c} = ({x_max}-{x_min}) // 2 + {x_min} + {self.roi[0]}")
 		return y_c, x_c
 
 	# @staticmethod
 	def compute_all_inf_obj_bbox_centre_screen_coords(self, obj_bbox_norm_coords) -> "list of nested [x, y] lists":
+		"""
+		:param obj_bbox_norm_coords:
+		:return: a list of nested [x, y] lists where
+		"""
 		obj_bbox_norm_coords_list = []
 		for obj_bbox_norm_coords_i_array in obj_bbox_norm_coords:
 			obj_bbox_norm_coords_i = self.compute_single_inf_obj_bbox_centre_screen_coords(obj_bbox_norm_coords_i_array)
-			obj_bbox_norm_coords_list.append([obj_bbox_norm_coords_i[0], obj_bbox_norm_coords_i[1]])
+			# obj_bbox_norm_coords_list.append([obj_bbox_norm_coords_i[0], obj_bbox_norm_coords_i[1]])
+			obj_bbox_norm_coords_list.append([obj_bbox_norm_coords_i[1], obj_bbox_norm_coords_i[0]])
 		return obj_bbox_norm_coords_list
+
+	def compute_normed_bbox_lrf_ds_vectors(self, confident_boxes_frame_centroids) -> "list of nested [x, y] lists":
+		obj_bbox_norm_coords_list = []
+		for bbox_i_centroid_coord in confident_boxes_frame_centroids:
+			bbox_i_centroid_x_coord, bbox_i_centroid_y_coord = bbox_i_centroid_coord
+			frame_centre_x_coord = self.roi[2]//2
+			frame_centre_y_coord = self.roi[3]//2
+			if bbox_i_centroid_x_coord > frame_centre_x_coord:
+				bbox_i_lrf_dx = bbox_i_centroid_x_coord - frame_centre_x_coord
+			else:
+				bbox_i_lrf_dx = frame_centre_x_coord - bbox_i_centroid_x_coord
+			if bbox_i_centroid_y_coord > frame_centre_y_coord:
+				bbox_i_lrf_dy = bbox_i_centroid_y_coord - frame_centre_y_coord
+			else:
+				bbox_i_lrf_dy = frame_centre_y_coord - bbox_i_centroid_y_coord
+			obj_bbox_norm_coords_list.append([bbox_i_lrf_dx, bbox_i_lrf_dy])
+			print(f"\nFrom compute_normed_bbox_lrf_ds_vectors, obj_bbox_norm_coords_list= {obj_bbox_norm_coords_list}")
+			print(f"self.roi[2]: {self.roi[2]}")
+			print(f"self.roi[3]: {self.roi[3]}")
+			print(f"frame_centre_x_coord: {frame_centre_x_coord}")
+			print(f"frame_centre_y_coord: {frame_centre_y_coord}")
+		return obj_bbox_norm_coords_list
+
+
 
 
 

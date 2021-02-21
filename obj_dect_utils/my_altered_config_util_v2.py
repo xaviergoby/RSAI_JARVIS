@@ -6,7 +6,7 @@ from tensorflow.python.lib.io import file_io
 
 
 def save_pipeline_config(pipeline_config, directory):
-	"""Saves a pipeline config text file to disk.
+	"""Saves a pipeline config obj_id_info file to disk.
 	Args:pipeline_config: A pipeline_pb2.TrainEvalPipelineConfig.
 	directory: The model directory into which the pipeline config file will be saved.
 	"""
@@ -23,9 +23,9 @@ def save_pipeline_config(pipeline_config, directory):
 def get_configs_from_pipeline_file(pipeline_config_path, config_override=None):
 	""" Reads config from a file containing pipeline_pb2.TrainEvalPipelineConfig.
 	Args:
-	pipeline_config_path: Path to pipeline_pb2.TrainEvalPipelineConfig text
+	pipeline_config_path: Path to pipeline_pb2.TrainEvalPipelineConfig obj_id_info
 	proto.
-	config_override: A pipeline_pb2.TrainEvalPipelineConfig text proto to
+	config_override: A pipeline_pb2.TrainEvalPipelineConfig obj_id_info proto to
 	override pipeline_config_path.
 	Returns:
 	Dictionary of configuration obj_centroids. Keys are `model`, `train_config`,

@@ -3,7 +3,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-frame_file_path = r"/jarvis/tests/mining_with_obj_dect_sys.PNG"
+# frame_file_path = r"/jarvis/tests/mining_with_obj_dect_sys.PNG"
+frame_file_path = r"C:\Users\Xavier\RSAI_JARVIS\jarvis\tests\mining_with_obj_dect_sys.PNG"
 frame = cv2.imread(frame_file_path, cv2.IMREAD_UNCHANGED)
 
 
@@ -74,7 +75,7 @@ obj2_t2_cent_wrt_fc = fc + obj2_t2_ds_2_fc
 print(f"*** obj1_t2_cent_wrt_fc: {obj1_t2_cent_wrt_fc}")
 print(f"*** obj2_t2_cent_wrt_fc: {obj2_t2_cent_wrt_fc}")
 
-bot_tot_px_displacement = obj2_t2_cent_wrt_fc - obj2_t1_cent_wrt_fc
+# bot_tot_px_displacement = obj2_t2_cent_wrt_fc - obj2_t1_cent_wrt_fc
 bot_tot_px_displacement = obj1_t2_cent_wrt_fc - obj1_t1_cent_wrt_fc
 equal_tot_bot_px_ds_2_objs = bot_tot_px_displacement == bot_tot_px_displacement
 print("equal tot bot px ds between all objs?: {0}".format(equal_tot_bot_px_ds_2_objs))
