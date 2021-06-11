@@ -1,0 +1,15 @@
+#         bottom left OR  top left
+# 12850: (3200, 3200) OR (3200, 3263)
+# 12851: (3200, 3264) OR (3200, 3327)
+import os
+
+
+GRID_REGION_BL_ORIGIN_WORLD_COORDS_DICT = {"12850": [3200, 3200], "12851": [3200, 3364]}
+GRID_REGION_TL_ORIGIN_WORLD_COORDS_DICT = {"12850": [3200, 3263], "12851": [3200, 3327]}
+
+RSAI_CV_NAV_MAPPING_DIR = os.path.dirname(os.path.abspath(__file__))
+RSAI_CV_NAV_MAPPING_DATA_DIR = os.path.join(RSAI_CV_NAV_MAPPING_DIR, "map_data")
+
+# print(f"RSAI_CV_NAV_MAPPING_DATA_DIR: {RSAI_CV_NAV_MAPPING_DIR}")
+# print(f"RSAI_CV_NAV_MAPPING_DATA_DIR: {RSAI_CV_NAV_MAPPING_DATA_DIR}")
+# print(f"cwd: {cwd}")

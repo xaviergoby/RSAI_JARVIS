@@ -1,9 +1,9 @@
 import numpy as np
 from PIL import ImageGrab
 import mss
-from jarvis.vision_sys.obj_detector import ObjectDetector
-from jarvis.vision_sys.obj_tracker import CentroidTracker
-from threading import Thread
+# from jarvis.vision_sys.obj_detector import ObjectDetector
+# from jarvis.vision_sys.obj_tracker import CentroidTracker
+# from threading import Thread
 import cv2
 
 class Sensor: # \\TODO: Renamed from ObjDectSensorSubSystem to Sensor
