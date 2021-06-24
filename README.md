@@ -43,6 +43,7 @@ Old School RuneScape, originally named RuneScape, is an improved version of the 
 
 lead to the banning of an estimated 98% of all botting accounts, equating approximately to 7.7 million million accounts being banned<a href="#bot_nuke" id="bot_nuke_ref"><sup>2</sup></a>.
 
+---
 
 ### Current Capabilities Demonstrations <a name="current_capabilities"></a>
 
@@ -55,9 +56,7 @@ Autonomous slaying of cows by the bot with the help of object detection. The Ten
 
 <br>
 
-![osrs_game_client_window_and_ui_components](assets/Edited_RSAI_Jarvis_Hobbes_Mining_Copy.gif)*<br>
-
-Object detection based autonomous resource gathering at the mines south of Lumbridge*
+![osrs_game_client_window_and_ui_components](assets/Edited_RSAI_Jarvis_Hobbes_Mining_Copy.gif)*<br>Object detection based autonomous resource gathering at the mines south of Lumbridge*
 
 <br>
 
@@ -85,6 +84,7 @@ A great and invaluable piece of contribution to project by [Victor Guillet](http
 
 ![osrs_game_client_window_and_ui_components](assets/OSRS_Game_Client_Window_and_User_Interface_Components.png)*<br>Object detection based autonomous NPC slaying at the cow pen near the in-game city/town called Lumbridge*
 
+---
 
 ### Autonomous Navigation Problem Potential Solutions & Key Topics<a name="auto_nav_prob_potential_sols"></a>
 
@@ -138,34 +138,69 @@ Flow of steps:
 
   - 2nd) Use generated mm screen pixel pos coords for Left Mouse Button actuator clicks. 
 
+---
+
+## Testing Scripts Explained
+
+- jarvis/tests/osrs_api_test.py: This script is used for testing the Old School Runescape API which allows you to fetch
+  real-time market prices of items from the Grand Exchange.
+- jarvis/tests/test_game_client_wndw.py: This script is used for testing the game client handler. The primary purpose of
+  the `GameClient` class is to "take control" of the game client window in order to resize & reposition the game client
+  window.
+- jarvis/tests/test_slam.py: Does not seem to be working.
+- jarvis/tests/test_vision_sys.py:
+- jarvis/tests/test_vision_sys_GUI_version.py: This script is for testing the integration of following modules:
+  - Object Detection & Tracking: `Vision`
+  - Game Client Handler, `GameClient`
+  - GUI: `VisionTestGUIHandler` & `VisionSysHelperUtil`
+  - Actuators (Mouse & Keyboard Clicks): `Mouse` & `HardwareEventsListener`
+  - The actual agent/bot: `Hobbes`
+
+---
+
+## "Mundane" TO-DO Dev Notes
+
+<ins>Files  **TO BE DELETED**</ins>
+
+- [ ] README_backup.adoc
+- [ ]  test_vision_sys_GUI_version.spec
+- [ ]  draft_for_README.md
+- [ ]  Handbook of Computer Vision Algorithms in Image Algebra.pdf
+
+**INCOMPLETE**
+
+<ins>Folders **TO BE DELETED**</ins>
+
+- [ ] bot_sys_components
+- [ ] build
+- [ ] dist
+
+**INCOMPLETE**
+
+<ins>JARVIS Folders & Files In Use [X] & Not In Use [_]</ins>
+
+- [ ] jarvis/actuator_sys/actuator.py
+- [X] jarvis/actuator_sys/mouse.py
+- [X] jarvis/game_client/game_client.py
+- [ ] jarvis/hobbes_bot/basic_self_contained_bot_cls.py
+- [X] jarvis/hobbes_bot/hobbes.py
+- [X] jarvis/hobbes_bot/inventory.py
+- [ ] jarvis/hobbes_bot/navigation.py
+- [ ] jarvis/hobbes_bot/skills.py
+- [ ] jarvis/jarvis_core/agent.py
+- [ ] jarvis/jarvis_core/environment.py
+
+**INCOMPLETE**
 
 
 <br>
-
-<br>
-
-<br>
-
-<br>
-
-<br>
-
-<br>
-
-<br>
-
 
 ---
 
 <a id="rsai_proj_title_note" href="#rsai_proj_title_note_ref"><sup>*</sup></a>More accurately, Old School RuneScape Artificial Intelligence, OSRS-AI, Bot
 
-<br>
+<a href="#osrs_rs3_player_base" id="osrs_rs3_player_base_ref"><sup>1</sup></a>[Old School RuneScape Official Wiki Webpage](https://oldschool.runescape.wiki/w/Old_School_RuneScape )
 
-<a href="#osrs_rs3_player_base" id="osrs_rs3_player_base_ref"><sup>1</sup></a>[Old School RuneScape
-
- Official Wiki Webpage](https://oldschool.runescape.wiki/w/Old_School_RuneScape )
-
- <br>
 
 <a id="bot_nuke" href="#bot_nuke_ref"><sup>2</sup></a>[Runescape bot nuking event bans 1.5 million bots in one day](https://www.pcgamer.com/runescape-bot-nuking-event-bans-1-5-million-bots-in-one-day/)
 

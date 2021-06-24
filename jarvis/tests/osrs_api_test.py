@@ -32,5 +32,5 @@ plt.show()
 
 print(f"copper ore price: {ge_copper_ore.price()}")
 
-bot_info = Hiscores("xaviergoby")
-print(f"bot skills info: {bot_info.skills}")
+# bot_info = Hiscores("xaviergoby")
+# print(f"bot skills info: {bot_info.skills}")

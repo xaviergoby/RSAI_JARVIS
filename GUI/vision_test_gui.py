@@ -87,9 +87,10 @@ class VisionTestGUIHandler:
 		self.ax.set_axis_off()
 		self.fig_agg.draw()
 
-	# def update_screen_cast(self, screen_shot_img):
-	# 	current_obj_dect_rgb_img_res = screen_shot_img
-	# 	current_obj_dect_rgb_img_res_bytes_format = cv2.imencode('.png', current_obj_dect_rgb_img_res)[1].tobytes()
+	def update_screen_cast(self, screen_shot_img):
+		current_obj_dect_rgb_img_res = screen_shot_img
+		current_obj_dect_rgb_img_res_bytes_format = cv2.imencode('.png', current_obj_dect_rgb_img_res)[1].tobytes()
+		self.window['screen_shot_image'].update(data=current_obj_dect_rgb_img_res_bytes_format)
 	# 	self.gui_window['screen_shot_image'].update(data=current_obj_dect_rgb_img_res_bytes_format)
 
 
