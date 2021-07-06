@@ -1,4 +1,3 @@
-# if __name__ == "__main__":
 import random
 from jarvis.game_client.game_client import GameClient
 from jarvis.vision_sys.vision_cls import Vision
@@ -8,38 +7,48 @@ from jarvis.utils.vision_sys_helper_util import VisionSysHelperUtil
 from jarvis.hobbes_bot.hobbes import Hobbes
 from jarvis.actuator_sys.mouse import Mouse
 import cv2
-import time
-import PySimpleGUI as sg
-import numpy as np
 from GUI.vision_test_gui import VisionTestGUIHandler
 
-# If set_window_pos_and_size() is called w/ def parameter args,
-# i.e. (0, 0, 800, 600) then game_client_area_roi should be (8, 31, 791, 591)
+
+########### GAME WINDOW INIT ###########
+# If set_window_pos_and_size() is called w/ def parameter args, i.e. (0, 0, 800, 600),
+# then game_client_area_roi should be (8, 31, 791, 591)!
 game_client = GameClient()
-game_client.set_wndw_pos_and_size() # osrs game window pos & dims set to (0, 0, 800, 600)
+# Setting the OSRS game window pos & dims to (0, 0, 800, 600)=(x_pos, y_pos, wndw_width, wndw_height)
+game_client.set_wndw_pos_and_size()
 game_client_area_roi = game_client.get_client_area_pos_and_size() # -> (8, 31, 791, 591)
 
+########### HARDWARE INIT ###########
+# Initialize/instantiate the class that will deal with monitoring keyboard and mouse "clicks".
 hw_events_listener = HardwareEventsListener()
+# Initialize/instantiate the (currrent starting) state of all the keyboard and mouse buttons.
 hw_events_listener.init_all_states()
 
-# Specify the task which the object detection system will be responsible of
-max_detections = 3
-confidence_threshold = 0.1
-max_obj_frames_lost = 2
+########### VIZ MODULE & OBJ DECT CONFIG INIT ###########
+max_detections = 3 # The max num of detected objects to be considered at once in any given moment
+confidence_threshold = 0.1 # The confidendence threshold req for a detected object to be taken into consideration
+max_obj_frames_lost = 2 # The max num of frames a detected object is allowed to go "missing/undetected" before being discarded from tracking.
+screen_capture_opt = "mss" # The library/package (AKA "mode") to be used for screen capturing by the Vision class
 # screen_capture_opt = "PIL"
-screen_capture_opt = "mss"
 vision = Vision(game_client_area_roi, max_detections, confidence_threshold, max_obj_frames_lost, mode=screen_capture_opt)
 vision.enable_manual_recording(True)
 
+###########  V&V ###########
 print(f"game_client_area_roi: {game_client_area_roi}")  # -> (8, 31, 791, 591)
 print(f"vision.roi: {vision.roi}")  # -> (8, 31, 791, 591)
 print(f"vision.img_dims: {vision.img_dims}") # -> (783, 560)
 
-# display_util = VisionSysHelperUtil(show_all_overlaid_text_info=False)
-display_util = VisionSysHelperUtil(show_obj_tracking_id=True, show_obj_centroid_coords=True)
-# display_util = VisionSysHelperUtil(show_obj_tracking_id=True, show_obj_centroid_coords=False)
-
+########### VIZ ANNOTATION INIT ###########
 gui_window = VisionTestGUIHandler()
+display_util = VisionSysHelperUtil(show=False)
+# display_util = VisionSysHelperUtil(show=True, show_overlayed_info=True,
+#                                    show_all_overlaid_text_info=True,
+#                                    show_obj_tracking_id=True,
+#                                    show_obj_centroid_coords=True,
+#                                    show_overlaid_dect_obj_markers=True)
+
+
+
 
 # Specify the task which the object detection system will be responsible of
 task_name = "mining"
@@ -167,6 +176,8 @@ while True:
 	gui_window.read()
 
 	gui_window.update_screen_cast(screen_shot_img=current_obj_dect_rgb_img_res)
+	gui_window.update_world_map()
+	# gui_window.update_GUI(screen_shot_img=current_obj_dect_rgb_img_res)
 
 	try:
 		obj_dect_info = list(current_dect_objs_centroids_dict.items())[0]  ##################################################################################

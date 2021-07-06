@@ -91,7 +91,21 @@ class VisionTestGUIHandler:
 		current_obj_dect_rgb_img_res = screen_shot_img
 		current_obj_dect_rgb_img_res_bytes_format = cv2.imencode('.png', current_obj_dect_rgb_img_res)[1].tobytes()
 		self.window['screen_shot_image'].update(data=current_obj_dect_rgb_img_res_bytes_format)
+
+
+	def update_world_map(self):
+		# current_pos_x, current_pos_y = current_pos
+		self.ax.cla()
+		self.ax.imshow(self.world_map_array, interpolation='nearest', aspect='auto')
+		self.ax.set_axis_off()
+		self.fig_agg.draw()
 	# 	self.gui_window['screen_shot_image'].update(data=current_obj_dect_rgb_img_res_bytes_format)
+
+	# def update_GUI(self, screen_shot_img=None, current_pos=None):
+	# 	if screen_shot_img is not None:
+	# 		self.update_screen_cast(screen_shot_img)
+	# 	if current_pos is not None:
+	# 		self.update_world_map(current_pos)
 
 
 

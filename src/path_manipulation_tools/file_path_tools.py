@@ -1,4 +1,5 @@
 import json
+import pickle
 from pathlib import Path
 import glob
 from settings import *
@@ -61,7 +62,7 @@ def get_file_stem_name(file_name_with_ext):
 	return file_name_without_extension
 
 
-def get_img_file_name_vals(img_file_name, return_type = None):
+def get_img_file_name_vals(img_file_name, return_type=None):
 	"""
 	:param img_file_name: str of the complete file name (so with its exntesion e.g. .jpg)
 	e.g. "wc_obj_dect_15,png" or e.g. "slaying_obj_dect_125.jpg" or e.g. "lumbridge_to_bridge_path_img_412_366.jpg"
@@ -91,12 +92,15 @@ def get_img_file_name_vals(img_file_name, return_type = None):
 		return img_file_name_vals_list
 
 
-def get_dir_contents_list(dir_path):
+def get_dir_contents_list(dir_path, without_ext=False):
 	"""
 	:param dir_path: windows format str full full_path
-	:return: a list of str names of each of the files contained within the dir located @ dir_path
+	:return: a list of str names of each of the files contained within the dir located @ dir_path.
+	The files names incl. their extension, e.g. "bones.PNG"
 	"""
 	dir_contents_list = os.listdir(dir_path)
+	if without_ext is True:
+		dir_contents_list = list(map(get_file_stem_name, dir_contents_list))
 	return dir_contents_list
 
 
@@ -180,10 +184,6 @@ def write_to_json_file(json_file_path, data):
 	with open(json_file_path, "w") as json_file:
 		json.dump(data, json_file, indent=2)
 
-
-import pickle
-
-
 def create_new_pickled_json(pickled_json_file_path, data):
 	with open(pickled_json_file_path, 'wb') as outfile:
 		pickle.dump(data, outfile)
@@ -221,6 +221,8 @@ if __name__ == "__main__":
 	vals2 = get_img_file_name_vals(r"C:\Users\XGOBY\RSAIBot\data\paths_travelled\path_finding_images\lumbridge2bridge\images\lumbridge_to_bridge_path_img_395_847.jpg", return_type="int")
 	print(vals1)
 	print(vals2)
-	print(get_img_file_name_vals(get_most_recent_data_file_name(r"C:\Users\XGOBY\RSAIBot\data\paths_travelled\path_finding_images\lumbridge2bridge\images")))
-	make_dir_if_nonexistent(nonexisting_full_dir_path2)
+	# print(get_img_file_name_vals(get_most_recent_data_file_name(r"C:\Users\XGOBY\RSAIBot\data\paths_travelled\path_finding_images\lumbridge2bridge\images")))
+	# make_dir_if_nonexistent(nonexisting_full_dir_path2)
+	print(get_dir_contents_list(r"C:\Users\Xavier\RSAI_JARVIS\data\obj_dect\inv_items\images"))
+	print(get_dir_contents_list(r"C:\Users\Xavier\RSAI_JARVIS\data\obj_dect\inv_items\images", without_ext=True))
 

@@ -25,17 +25,49 @@ class InventoryHandler:
         self.saved_inv_item_img_icon_names_list = [inv_item_img_icon_name.split(".")[0] for
                                                    inv_item_img_icon_name in self.saved_inv_item_img_icon_file_names]
         self.inv_item_img_metadata = self.__initialize_inv_item_imgs_metadata()
+        self.__load_known_inv_items_file_names()
+        self.__init_known_inv_items_names()
+        self.__init_known_inv_items_names_imgs_dict()
+        self.__init_known_inv_items_count_dict()
 
 
-    def get_saved_inv_item_img_file_names(self):
-        saved_inv_item_img_icon_file_names = file_path_tools.get_dir_contents_list(self.inv_item_img_icons_dir_path)
-        return saved_inv_item_img_icon_file_names
+    def __load_known_inv_items_file_names(self):
+        # __load_known_inv_items_file_names
+        known_inv_items_file_names = file_path_tools.get_dir_contents_list(self.inv_item_img_icons_dir_path)
+        # saved_inv_item_img_icon_file_names
+        self.known_inv_items_file_names = known_inv_items_file_names
+        return known_inv_items_file_names
+
+    def __init_known_inv_items_names(self):
+        # inv_items_img_file_names_with_ext = file_path_tools.get_dir_contents_list(self.inv_item_img_icons_dir_path)
+        inv_items_img_file_names_without_ext = list(map(file_path_tools.get_file_stem_name, self.known_inv_items_file_names))
+        self.known_inv_items_names = inv_items_img_file_names_without_ext
+
+    def __init_known_inv_items_names_imgs_dict(self):
+        known_inv_items_names_imgs_dict = {}
+        # inv_items_img_file_names_with_ext = file_path_tools.get_dir_contents_list(self.inv_item_img_icons_dir_path)
+        # inv_items_img_file_names_without_ext = list(map(file_path_tools.get_file_stem_name, inv_items_img_file_names_with_ext))
+        for inv_item_file_name_i in range(len(self.known_inv_items_names)):
+            img_abs_file_path = os.path.join(self.inv_item_img_icons_dir_path,
+                                             self.known_inv_items_names[inv_item_file_name_i])
+            # inv_item_img = cv2.imread(img_abs_file_path).shape[:2]
+            inv_item_img = cv2.imread(img_abs_file_path)
+            inv_item_name = self.known_inv_items_names[inv_item_file_name_i]
+            known_inv_items_names_imgs_dict[inv_item_name] = inv_item_img
+        self.known_inv_items_imgs_dict = known_inv_items_names_imgs_dict
+
+    def __init_known_inv_items_count_dict(self):
+        known_inv_items_count_dict = {}
+        for inv_item_file_name_i in range(len(self.known_inv_items_names)):
+            inv_item_name = self.known_inv_items_names[inv_item_file_name_i]
+            known_inv_items_count_dict[inv_item_name] = 0
+        self.known_inv_items_count_dict = known_inv_items_count_dict
 
 
     def __initialize_inv_item_imgs_metadata(self):
         inv_item_imgs_metadata = {}
-        inv_item_img_file_names_list = self.get_saved_inv_item_img_file_names()
-        for inv_item_img_file_name in inv_item_img_file_names_list:
+        known_inv_items_file_names = self.__load_known_inv_items_file_names()
+        for inv_item_img_file_name in known_inv_items_file_names:
             # the stem of a file (name/full_path) is, e.g. a file name w/o its ext, e.g. w/o .PNG for an img file
             img_file_stem = file_path_tools.get_file_stem_name(inv_item_img_file_name)
             img_file_path = os.path.join(self.inv_item_img_icons_dir_path, inv_item_img_file_name)
@@ -51,7 +83,7 @@ class InventoryHandler:
 
 
     def get_saved_inv_item_img_icon_names(self):
-        saved_inv_item_img_icon_file_names = self.get_saved_inv_item_img_file_names()
+        saved_inv_item_img_icon_file_names = self.__load_known_inv_items_file_names()
         saved_inv_item_img_icon_names_list = [inv_item_img_icon_name.split(".")[0] for inv_item_img_icon_name in saved_inv_item_img_icon_file_names]
         return saved_inv_item_img_icon_names_list
 
@@ -128,6 +160,9 @@ class InventoryHandler:
             inv_item_img_file_stem = file_path_tools.get_file_stem_name(inv_item_img_icon_file_name)
             all_inv_item_name_cnt_pair_dict[inv_item_img_file_stem] = self.get_inv_item_count_by_name(inv_item_img_file_stem)
         return all_inv_item_name_cnt_pair_dict
+
+
+
 
 
 if __name__ == "__main__":

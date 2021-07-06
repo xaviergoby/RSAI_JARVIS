@@ -21,7 +21,6 @@ class VisionSysHelperUtil:
         self.bbox_c_pnt_colour = bbox_c_pnt_colour
 
     ########################## Obj Dect Output Frame Info Overlaying ##########################
-
     def set_dect_obj_info(self, img, tracking_id_i, centroid_i):
         """
         :param img:
@@ -41,7 +40,6 @@ class VisionSysHelperUtil:
                 cv2.putText(img, obj_frame_centroid_pos_info,
                             (centroid_i[0], centroid_i[1] + 1 * self.vertical_offset),
                             cv2.FONT_HERSHEY_SIMPLEX, self.text_font_size, self.text_colour, self.text_font_thickness)
-
 
     def set_dect_obj_markers(self, img, centroid_i):
         """
@@ -65,7 +63,6 @@ class VisionSysHelperUtil:
                 self.set_dect_obj_markers(img, centroid_i)
 
     ########################## Obj Dect State Info Printing ##########################
-
     def print_obj_dect_input_frame_info(self, obj_dect_input_frame):
         print("\n" + "⨂", "Object Detection Sys Input Frame Information:")
         frame_ic = int(obj_dect_input_frame.shape[0] // 2)
@@ -104,6 +101,3 @@ class VisionSysHelperUtil:
             # print(obj_frame_centroid_pos_info)
             obj_tracker_id_frame_centroid_coords_info = f"- ID: {tracking_id_i} \t&\tScreen Relative Centroid Coords: {(centroid_i[1], centroid_i[0])}"
             print(obj_tracker_id_frame_centroid_coords_info)
-        # print("~" * 5)
-
-    ########################## Image

@@ -86,7 +86,7 @@ A great and invaluable piece of contribution to project by [Victor Guillet](http
 
 ---
 
-### Autonomous Navigation Problem Potential Solutions & Key Topics<a name="auto_nav_prob_potential_sols"></a>
+__## Autonomous Navigation Problem Potential Solutions & Key Topics<a name="auto_nav_prob_potential_sols"></a>
 
 - Iterative Closest Point (ICP) algorithm
 
@@ -124,9 +124,9 @@ A great and invaluable piece of contribution to project by [Victor Guillet](http
 
 
 
-### Navigation & Simultaneous Localization And Mapping (SLAM)
+## Navigation & Simultaneous Localization And Mapping (SLAM)
 
-#### Place to Place Navigation (P2PNav)
+### Place to Place Navigation (P2PNav)
 
 Flow of steps:
 
@@ -140,40 +140,63 @@ Flow of steps:
 
 ---
 
-## Testing Scripts Explained
+## Current Issues & Potential Solution Approaches
 
-- jarvis/tests/osrs_api_test.py: This script is used for testing the Old School Runescape API which allows you to fetch
+|        Modules       |                                                       Issues                                                       |                         Potential Solutions                        |
+|:--------------------:|:------------------------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------:|
+| `Inventory` `Hobbes` | Determining the total number of items present in the inventory, regardless of whether items are known or unknown. | First start by counting all the items which are known and then.... |
+|                      |                                                                                                                    |                                                                    |
+|                      |                                                                                                                    |                                                                    |
+|                      |                                                                                                                    |                                                                    |
+<br>
+<br>
+
+---
+
+## Testing, `jarvis/tests`, Scripts Explained
+
+- `jarvis/tests/osrs_api_test.py`: This script is used for testing the Old School Runescape API which allows you to fetch
   real-time market prices of items from the Grand Exchange.
-- jarvis/tests/test_game_client_wndw.py: This script is used for testing the game client handler. The primary purpose of
+- `jarvis/tests/test_game_client_wndw.py`: This script is used for testing the game client handler. The primary purpose of
   the `GameClient` class is to "take control" of the game client window in order to resize & reposition the game client
   window.
-- jarvis/tests/test_slam.py: Does not seem to be working.
-- jarvis/tests/test_vision_sys.py:
-- jarvis/tests/test_vision_sys_GUI_version.py: This script is for testing the integration of following modules:
+- `jarvis/tests/test_slam.py`: Does not seem to be working.
+- `jarvis/tests/test_vision_sys.py`: 
+- `jarvis/tests/test_vision_sys_GUI_version.py`: This script is for testing the integration of following modules:
   - Object Detection & Tracking: `Vision`
   - Game Client Handler, `GameClient`
   - GUI: `VisionTestGUIHandler` & `VisionSysHelperUtil`
   - Actuators (Mouse & Keyboard Clicks): `Mouse` & `HardwareEventsListener`
   - The actual agent/bot: `Hobbes`
 
----
+## Util, `jarvis/utils`, Scripts Explained
+- `jarvis/utils/vision_sys_helper_util.py`: The `VisionSysHelperUtil` class in this script is a helpful 
+utility for the `Vision` & `VisionTestGUIHandler`  modules. Its utilisation purpose is the annotation of infomartion and drawing of "symbols" on the captured screen shots which are displayed in the GUI. All "settings" of this class are `True` by default!
+  ![](assets/vision_sys_helper_util_VisionSysHelperUtil_demo_with_and without_all_annots.jpg)*<br>`VisionTestGUIHandler` class with (left) all default/True settings and (right) with every thing "switched" off. Note that the script in use (being annotated in the bottom right) is `jarvis/tests/test_vision_sys_GUI_version.py` script.*
+  
 
+---
+  
 ## "Mundane" TO-DO Dev Notes
+
+<ins>Script Documentation  **TO BE ADDED**</ins>
+
+- [ ] `jarvis/tests/test_vision_sys_GUI_version.py`
 
 <ins>Files  **TO BE DELETED**</ins>
 
-- [ ] README_backup.adoc
-- [ ]  test_vision_sys_GUI_version.spec
-- [ ]  draft_for_README.md
-- [ ]  Handbook of Computer Vision Algorithms in Image Algebra.pdf
+- [X]  README_backup.adoc
+- [X]  test_vision_sys_GUI_version.spec
+- [X]  draft_for_README.md
+- [X]  Handbook of Computer Vision Algorithms in Image Algebra.pdf
 
 **INCOMPLETE**
 
 <ins>Folders **TO BE DELETED**</ins>
 
-- [ ] bot_sys_components
-- [ ] build
-- [ ] dist
+- [X] bot_sys_components
+- [X] build
+- [X] dist
 
 **INCOMPLETE**
 
@@ -192,8 +215,34 @@ Flow of steps:
 
 **INCOMPLETE**
 
+---
 
-<br>
+## Acronyms, Abreviations & Terms Used
+
+- "def": "default"
+- "w/": "with"
+- "w/o": "without"
+- "b/c": "because"
+- "args": "arguments"
+- "params": "parameters"
+- "OSRS": "Old School RuneScape"
+- "RS3": "RuneScape 3"
+- "vis" or "viz: "Vision"
+- "h/w": "hardware"
+- "pos": "position"
+- "coords": "coordinates"
+- "dim(s)": "dimension(s)"
+- "obj": "object"
+- "dect" (yes, dect): "detection"
+- "wndw": "window"
+- "num": "number"
+- "req": "required"
+- "V&V" or "VV": "Verification & Validation"
+
+
+
+**INCOMPLETE**
+
 
 ---
 
