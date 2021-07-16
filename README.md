@@ -134,26 +134,21 @@ Flow of steps:
 
 - **Along Path/Trajectory**: 
 
-  - 1st) Convert A* generated (global) Main Map displacements to mini map (mm) screen pixel pos coords.
+  - 1st) Convert A* generated (global) Main Maps displacements to mini map (mm) screen pixel pos coords.
 
   - 2nd) Use generated mm screen pixel pos coords for Left Mouse Button actuator clicks. 
 
 ---
+# Scripts Explained
 
-## Current Issues & Potential Solution Approaches
+## Main/Root Dir, `RSAI_JARVIS`
+- `settings.py`: This script is reponsible of setting all the necessary settings which will me required and used (in the background) by the various other scripts/modules present in this repo. The general settings in question are:
+  - Directory and file paths.
+  - The specific mouse & keyboard buttons to be monitored, and their initial states upon initialization.
+  - The size/dim (width & height) to resize (& maintain) the game window, and the position
+  (x, y)( w/ (0, 0) at the top left of the screen) to position the game window to. Also, the name of the window.
 
-|        Modules       |                                                       Issues                                                       |                         Potential Solutions                        |
-|:--------------------:|:------------------------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------:|
-| `Inventory` `Hobbes` | Determining the total number of items present in the inventory, regardless of whether items are known or unknown. | First start by counting all the items which are known and then.... |
-|                      |                                                                                                                    |                                                                    |
-|                      |                                                                                                                    |                                                                    |
-|                      |                                                                                                                    |                                                                    |
-<br>
-<br>
-
----
-
-## Testing, `jarvis/tests`, Scripts Explained
+## Testing, `jarvis/tests`
 
 - `jarvis/tests/osrs_api_test.py`: This script is used for testing the Old School Runescape API which allows you to fetch
   real-time market prices of items from the Grand Exchange.
@@ -169,10 +164,21 @@ Flow of steps:
   - Actuators (Mouse & Keyboard Clicks): `Mouse` & `HardwareEventsListener`
   - The actual agent/bot: `Hobbes`
 
-## Util, `jarvis/utils`, Scripts Explained
+## Util, `jarvis/utils`
+
 - `jarvis/utils/vision_sys_helper_util.py`: The `VisionSysHelperUtil` class in this script is a helpful 
 utility for the `Vision` & `VisionTestGUIHandler`  modules. Its utilisation purpose is the annotation of infomartion and drawing of "symbols" on the captured screen shots which are displayed in the GUI. All "settings" of this class are `True` by default!
   ![](assets/vision_sys_helper_util_VisionSysHelperUtil_demo_with_and without_all_annots.jpg)*<br>`VisionTestGUIHandler` class with (left) all default/True settings and (right) with every thing "switched" off. Note that the script in use (being annotated in the bottom right) is `jarvis/tests/test_vision_sys_GUI_version.py` script.*
+
+## Game Client, `jarvis/game_client`, 
+- `jarvis/game_client/game_client.py`: This class is reponsible of the managinging & handling of the OSRS game client window. For instance, it allows for the changing of "the position and dimensions of the specified window". Note that "For a top-level window, the position and dimensions are relative to the upper-left corner of the screen." Also, "NOTE (regarding window alignment with true left & true top) "Windows 10 has an invisible border of 7 pixels (Totaling to 8 pixels if you include the visible 1 pixel window
+  border.)"
+  
+## Vision Sys, `jarvis/vision_sys`
+- `jarvis/vision_sys/vision_cls.py`:
+- `jarvis/vision_sys/sensor.py`:
+- `jarvis/vision_sys/obj_detector.py`:
+- `jarvis/vision_sys/obj_tracker.py`:
   
 
 ---
@@ -182,8 +188,10 @@ utility for the `Vision` & `VisionTestGUIHandler`  modules. Its utilisation purp
 <ins>Script Documentation  **TO BE ADDED**</ins>
 
 - [ ] `jarvis/tests/test_vision_sys_GUI_version.py`
+- [ ] `jarvis/utils/vision_sys_helper_util.py`
+- [X] `jarvis/game_client/game_client.py`
 
-<ins>Files  **TO BE DELETED**</ins>
+<ins>Files **TO BE DELETED**</ins>
 
 - [X]  README_backup.adoc
 - [X]  test_vision_sys_GUI_version.spec
@@ -213,6 +221,19 @@ utility for the `Vision` & `VisionTestGUIHandler`  modules. Its utilisation purp
 - [ ] jarvis/jarvis_core/agent.py
 - [ ] jarvis/jarvis_core/environment.py
 
+---
+
+## Current Issues & Potential Solution Approaches
+
+|        Modules       |                                                       Issues                                                       |                         Potential Solutions                        |
+|:--------------------:|:------------------------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------:|
+| `Inventory` `Hobbes` | Determining the total number of items present in the inventory, regardless of whether items are known or unknown. | First start by counting all the items which are known and then.... |
+|                      |                                                                                                                    |                                                                    |
+|                      |                                                                                                                    |                                                                    |
+|                      |                                                                                                                    |                                                                    |
+
+---
+
 **INCOMPLETE**
 
 ---
@@ -238,6 +259,7 @@ utility for the `Vision` & `VisionTestGUIHandler`  modules. Its utilisation purp
 - "num": "number"
 - "req": "required"
 - "V&V" or "VV": "Verification & Validation"
+- "sys": "system"
 
 
 
