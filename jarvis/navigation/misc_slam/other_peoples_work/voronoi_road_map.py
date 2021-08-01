@@ -9,7 +9,7 @@ author: Atsushi Sakai (@Atsushi_twi)
 import math
 import numpy as np
 import matplotlib.pyplot as plt
-from jarvis.navigation.slam import DijkstraSearch
+from jarvis.navigation.misc_slam import DijkstraSearch
 from scipy.spatial import cKDTree, Voronoi
 
 show_animation = True

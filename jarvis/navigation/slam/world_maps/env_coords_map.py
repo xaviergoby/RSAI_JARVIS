@@ -1,5 +1,7 @@
+# import os
 import numpy as np
-
+# import settings
+# from matplotlib import pyplot as plt
 
 
 class EnvironmentCoordinatesMap:
@@ -18,6 +20,12 @@ class EnvironmentCoordinatesMap:
 		env_tile_col_idx = tile_world_col_idx - self.top_left_origin_world_x_coords
 		env_tile_row_idx = self.top_left_origin_world_y_coords - tile_world_row_idx
 		return env_tile_col_idx, env_tile_row_idx
+
+	# def vis(self):
+	# 	fig, ax = plt.subplots(figsize=(10, 8))
+	# 	ax.imshow(self.navigability_array, cmap='gray')
+	# 	ax.title.set_text(self.__repr__())
+	# 	plt.show()
 
 
 if __name__ == "__main__":

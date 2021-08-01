@@ -1,5 +1,5 @@
 import numpy as np
-from jarvis.navigation.slam import WorldMap
+from jarvis.navigation.misc_slam import WorldMap
 from jarvis.navigation.navigator import Navigator
 from jarvis.utils import time_tools
 from jarvis.utils import screen_tools

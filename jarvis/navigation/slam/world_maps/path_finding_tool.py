@@ -1,7 +1,7 @@
-from pathfinding.core.diagonal_movement import DiagonalMovement
+import numpy as np
 from pathfinding.core.grid import Grid
 from pathfinding.finder.a_star import AStarFinder
-import numpy as np
+from pathfinding.core.diagonal_movement import DiagonalMovement
 
 
 # 384, 128

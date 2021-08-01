@@ -1,14 +1,44 @@
+import time
+import random
+import pyautogui
+import numpy as np
+from pyclick import HumanClicker
+from pathfinding.core.grid import Grid
+from pathfinding.finder.a_star import AStarFinder
+from pathfinding.core.diagonal_movement import DiagonalMovement
+from jarvis.utils import screen_tools
+from jarvis.navigation.slam.world_maps.navigability_map import NavigabilityMap
+from jarvis.navigation.slam.world_maps.world_coordinates_map import CoordinatesMap
+from jarvis.navigation.slam.world_maps.env_coords_map import EnvironmentCoordinatesMap
 
 
+class WorldMap:
+
+	def __init__(self, navigability_array, top_left_origin_world_coords):
+		self.navigability_array = navigability_array
+		self.num_tile_rows = self.navigability_array.shape[0]
+		self.num_tile_cols = self.navigability_array.shape[1]
+		self.world_map_tiles_size = self.navigability_array.shape
+		self.top_left_origin_world_coord = top_left_origin_world_coords
+		self.navigability_map = NavigabilityMap(self.navigability_array)
+		self.world_coords_map = CoordinatesMap(self.top_left_origin_world_coord, self.world_map_tiles_size)
+		self.env_coords_map = EnvironmentCoordinatesMap(self.top_left_origin_world_coord, self.world_map_tiles_size)
+
+	def get_target_tile_lmc_rand_coords(self, current_tile_world_coords, target_tile_world_coords):
+		ctx, cty = current_tile_world_coords[0], current_tile_world_coords[1]
+		ttx, tty = target_tile_world_coords[0], target_tile_world_coords[1]
+		tt_left_px_lim = int((ttx - ctx) * 4 + 708)
+		tt_right_px_lim = int((ttx - ctx) * 4 + 711)
+		tt_top_px_lim = int((tty - cty) * -4 + 113)
+		tt_bottom_px_lim = int((tty - cty) * -4 + 116)
+		rand_lmc_x_px_coord = random.randint(tt_left_px_lim, tt_right_px_lim)
+		rand_lmc_y_px_coord = random.randint(tt_top_px_lim, tt_bottom_px_lim)
+		return rand_lmc_x_px_coord, rand_lmc_y_px_coord
 
 
 if __name__ == "__main__":
-	from pathfinding.core.diagonal_movement import DiagonalMovement
-	from pathfinding.core.grid import Grid
-	from pathfinding.finder.a_star import AStarFinder
-	import numpy as np
-	import random
-	from research_and_dev.rsai_cv_navigability_mapping.world_maps import WorldMap
+
+
 	top_left_origin_world_coords = (3136, 3519)
 	world_obstacles_array = np.load("world_array.npy")
 	world_map = WorldMap(world_obstacles_array, top_left_origin_world_coords)
@@ -80,15 +110,9 @@ if __name__ == "__main__":
 	print(truncated_lmc_pos_px_coords)
 	print(len(truncated_lmc_pos_px_coords))
 
-	from src.ui_automation_tools import screen_tools
-	import pyautogui
-	from pyclick import HumanClicker
-	import time
-
 	screen_tools.set_window_pos_and_size()
 	hc = HumanClicker()
 	# delay = random.uniform(3, 4)
-
 
 	for lmc_px_pos_i in shortened_path_lmc_px_coords:
 		lmc_px_x_coord = lmc_px_pos_i[0]

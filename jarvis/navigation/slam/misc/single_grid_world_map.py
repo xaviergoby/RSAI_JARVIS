@@ -12,8 +12,8 @@ class MetaArray(np.ndarray):
 		return obj
 
 	def __array_finalize__(self, obj):
-		if obj is None: return
-		self.metadata = getattr(obj, 'metadata', None)
+		if obj is None:
+			self.metadata = getattr(obj, 'metadata', None)
 
 
 # a = MetaArray([1,2,3], comment='/Documents/Data/foobar.txt')

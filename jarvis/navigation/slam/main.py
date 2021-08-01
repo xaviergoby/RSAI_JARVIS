@@ -1,8 +1,8 @@
 import numpy as np
-from jarvis.navigation.rsai_cv_navigability_mapping.world_maps.world_map import WorldMap
-from jarvis.navigation.rsai_cv_navigability_mapping.navigation.navigator import Navigator
-from src.utils.time_tools import delay_timer
-from src.ui_automation_tools import screen_tools
+from jarvis.utils import screen_tools
+from jarvis.utils.time_tools import delay_timer
+from jarvis.navigation.slam.world_maps.world_map import WorldMap
+from jarvis.navigation.slam.navigation.navigator import Navigator
 
 
 

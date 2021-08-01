@@ -1,9 +1,9 @@
+import time
 import random
-from pathfinding.core.diagonal_movement import DiagonalMovement
+from pyclick import HumanClicker
 from pathfinding.core.grid import Grid
 from pathfinding.finder.a_star import AStarFinder
-from pyclick import HumanClicker
-import time
+from pathfinding.core.diagonal_movement import DiagonalMovement
 
 
 class Navigator:

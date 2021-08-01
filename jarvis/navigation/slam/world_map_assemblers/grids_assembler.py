@@ -1,10 +1,10 @@
-import numpy as np
-import cv2
 import os
+import cv2
+import numpy as np
 from os import listdir
 from os.path import isdir, join
-from research_and_dev.rsai_cv_navigability_mapping import cv_nav_settings
-from research_and_dev.rsai_cv_navigability_mapping import navigability_mapper_func
+from jarvis.navigation.slam import cv_nav_settings
+from jarvis.navigation.slam import navigability_mapper_func
 
 
 class GridsAssembler:

@@ -1,5 +1,5 @@
 import cv2
-from jarvis.navigation.rsai_cv_navigability_mapping.world_map_assemblers.subgrids_assembler import SubgridsAssembler
+from jarvis.navigation.slam.world_map_assemblers.subgrids_assembler import SubgridsAssembler
 
 
 class NavMapCoordsToolKit:

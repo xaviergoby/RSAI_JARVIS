@@ -1,5 +1,5 @@
 import numpy as np
-from jarvis.navigation.rsai_cv_navigability_mapping import cv_nav_settings
+from jarvis.navigation.slam import cv_nav_settings
 
 
 
