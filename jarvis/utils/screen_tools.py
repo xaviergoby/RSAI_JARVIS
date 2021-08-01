@@ -14,7 +14,7 @@ import settings
 ctypes.windll.user32.SetProcessDPIAware()
 
 
-def get_window_screen_tl_br_coords(win_name):
+def get_window_screen_tl_br_coords(win_name): # //TODO: Do V&V
 	"""win32gui.GetClientRect(hwnd) returns the client coordinates of the window. left and top will be zero.
 	(left, top, right, bottom) = GetClientRect()
 				~~~ Schematic ~~~
@@ -38,7 +38,7 @@ def get_window_screen_tl_br_coords(win_name):
 	:param win_name: name of window i.e. "RuneScape"
 	:return: a 4-tuple of (left, top, right, bottom)
 	e.g. returned coords for X: (-8, -8, 1928, 1048)
-	
+
 	Note: win32gui.GetWindowRect(hwnd) returns the following for the window handle, hwnd:
 		(lpRect.left, lpRect.top, lpRect.right, lpRect.bottom)
 	"""
@@ -139,7 +139,7 @@ def set_window_pos_and_size(hwnd = None, x_new = 0, y_new = 0, new_width = 800, 
 	It is the border for resizing windows which is on the left, right and bottom edge of the window. "
 	Notice how the resizing cursor reacts with the top edge. There is no invisible border there. An easy fix is to just offset the x in MoveWindow as seen below:
 	win32gui.MoveWindow(hwnd, -7, 0, new_width, new_height, True)
-	
+
 	This therefore means that if I instruct this function to set the pos (of the top-left point) of the game client to be
 	(located) at (x_new=0, y_new=0) and instruct the dimensions/size of this game client to be (new_width=800, new_height=600), this wil
 	essentially mean that my game client will end up occupying all the:
@@ -147,7 +147,7 @@ def set_window_pos_and_size(hwnd = None, x_new = 0, y_new = 0, new_width = 800, 
 		as when working with, e.g. numpy array indexing, I start at 0 instead of 1 & that is why 800 is exclueded!).
 		ii) Vertical pixels of my screen between & including y=0 & x=599 (since, just
 		as when working with, e.g. numpy array indexing, I start at 0 instead of 1 & that is why 600 is exclueded!).
-		
+
 	:param hwnd: A handle to the window. Is None by def.
 	:param x_new: The new position of the left side of the window. Is 0 by def.
 	:param y_new: The new position of the top of the window. Is 0 by def.

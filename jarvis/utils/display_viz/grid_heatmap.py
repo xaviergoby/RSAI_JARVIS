@@ -3,7 +3,7 @@ from jarvis.utils.display_viz.helpers import make_data
 import matplotlib.pyplot as plt
 from pandas import DataFrame
 import seaborn as sns
-# your implementation of slam should work with the following inputs
+# your implementation of misc_slam should work with the following inputs
 # feel free to change these input values and see how it responds!
 
 # world parameters

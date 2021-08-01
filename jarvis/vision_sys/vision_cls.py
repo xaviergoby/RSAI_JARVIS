@@ -30,6 +30,8 @@ class Vision: # \\TODO: Renamed from ObjDectSensorSubSystem to Sensor
 		self.visual_memory = None
 		# self.history_len = None
 
+
+
 	def enable_manual_recording(self, recording_auth):
 		if recording_auth is True:
 			self.spatial_history = []

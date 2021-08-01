@@ -91,6 +91,14 @@ while True:
 
 	display_util.overlay_obj_dect_state_info(current_obj_dect_img_res, current_dect_objs_centroids_dict)
 
+	print(f"frame.shape: {frame.shape}")
+	print(f"current_obj_dect_img_res.shape: {current_obj_dect_img_res.shape}")
+	print(f"vision.detector.img_height: {vision.detector.img_height}")
+	print(f"vision.detector.img_height: {vision.detector.img_width}")
+	print(f"vision.tracker.roi: {vision.tracker.roi}")
+
+
+
 	# display_util.print_obj_dect_output_frame_info(obj_dect_output_frame=current_obj_dect_img_res)
 	# display_util.print_tracked_lrf_centroid_ds_vectors(lrf_centroid_ds_vectors=obj_centroids_lrf_ds_vectors)
 	# display_util.print_multiline_dect_objs_tracked_info(objs_tracked_dict=current_dect_objs_centroids_dict)

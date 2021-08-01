@@ -14,7 +14,7 @@ class GameClient:
 		else:
 			pass
 
-	def set_wndw_pos_and_size(self):
+	def set_wndw_pos_and_size(self) -> '(wx1, wy1, wx2, wy2), i.e. (0, 0, 800, 600)':
 		"""
 		Sets the game window position and dimensions using (wndw_pos, wndw_size)
 		which by default will be (0, 0, 800, 600)
@@ -23,12 +23,11 @@ class GameClient:
 		screen_tools.set_window_pos_and_size(hwnd=None, x_new=self.wndw_x_pos, y_new=self.wndw_y_pos,
 		                                     new_width=self.wndw_width, new_height=self.wndw_height, wndw_name=self.wndw_name)
 
-	def get_client_area_pos_and_size(self):
+	def get_client_area_pos_and_size(self) -> '(lx, ty, rx, by), i.e. (8, 31, 791, 591)':
 		"""
 		:return: a 4-tuple consisting of (client_area_tl_pos_x, client_area_tl_pos_y, client_area_width, client_area_height)
-		If a window was set with out specifying its specific desired position or dimensions this will mean that
-		the window will have been set using the def settings (0, 0, 800, 600) found in settings.py
-		If this is the case then the value of the elements in the tuple returned are: (8, 31, 560, 783)
+		E.g. init this cls w/ the def args in its __init__ i.e. settings.GAME_WNDW_POS=(0,0) & settings.GAME_WNDW_SIZE=(800,600)
+		will lead to this metod returning the tuple (8, 31, 791, 591) <=> (lx, ty, rx, by)
+		Where (lx, ty, rx, by) ⩧ (Left Most x coord, Top Most y coord, Right Most x coord, Bottom Most y coord)
 		"""
 		return screen_tools.get_client_area_tl_pos_and_size()
-
