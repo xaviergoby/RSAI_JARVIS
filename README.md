@@ -179,7 +179,33 @@ utility for the `Vision` & `VisionTestGUIHandler`  modules. Its utilisation purp
 - `jarvis/vision_sys/sensor.py`:
 - `jarvis/vision_sys/obj_detector.py`:
 - `jarvis/vision_sys/obj_tracker.py`:
-  
+
+---
+
+## Branches Detail Notes
+
+### jarvis_modules_dev
+
+#### Strictly Specific Work Tasks
+- test_vision_sys_GUI_version.py
+- vision_sys/percept_cls.py
+- vision_sys/vis_toolkit.py
+- vision_sys/vision_cls.py
+
+#### Loosely Specific Work Tasks
+- game_client/game_client.py
+- utils/screen_tools.py
+- tests/test_screen_tools.py
+
+### slam_dev
+
+#### Strictly Specific Work Tasks
+- navigation/*
+- tests/test_slam.py
+
+#### Loosely Specific Work Tasks
+- utils/screen_tools.py
+- tests/test_screen_tools.py
 
 ---
   
