@@ -16,7 +16,7 @@ if __name__ == "__main__":
 
     game_client = GameClient()
     game_client.set_wndw_pos_and_size() # osrs game window pos & dims set to (0, 0, 800, 600)
-    game_client_area_roi = game_client.get_client_area_pos_and_size() # -> (8, 31, 783, 560)
+    game_client_area_roi = game_client.get_client_tl_br_coords_wrt_screen() # -> (8, 31, 783, 560)
 
     max_detections = 3
     confidence_threshold = 0.1

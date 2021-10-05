@@ -2,6 +2,7 @@ import cv2
 import random
 import settings
 from jarvis.game_client.game_client import GameClient
+from jarvis.game_client.federated_game_client_ import FederatedGameClient
 from jarvis.vision_sys.vision_cls import Vision
 from jarvis.utils.hardware_monitoring.hardware_events_listener import HardwareEventsListener
 from jarvis.utils import screen_tools
@@ -10,7 +11,6 @@ from jarvis.utils.vision_sys_helper_util import VisionSysHelperUtil
 from jarvis.hobbes_bot.hobbes import Hobbes
 from jarvis.actuator_sys.mouse import Mouse
 from GUI.vision_test_gui import VisionTestGUIHandler
-
 
  # Jarvis has Viasion
  # Jarvis gets the GameClient
@@ -23,13 +23,14 @@ from GUI.vision_test_gui import VisionTestGUIHandler
 ########### GAME WINDOW INIT ###########
 # If set_window_pos_and_size() is called w/ def parameter args, i.e. (0, 0, 800, 600),
 # then game_client_area_roi should be (8, 31, 791, 591)!
-game_client = GameClient()
+# game_client = GameClient()
+federated_game_client = FederatedGameClient() # √
 # Setting the OSRS game window pos & dims to (0, 0, 800, 600)=(x_pos, y_pos, wndw_width, wndw_height)
-game_client.set_wndw_pos_and_size()
-game_client_area_roi = game_client.get_client_tl_br_coords_wrt_screen()
-print(f"game_client.get_client_area_pos_and_size()): {game_client.get_client_tl_br_coords_wrt_screen()} game_client.get_client_area_pos_and_size()")
-# -> (8, 31, 791, 591")
-print(f"screen_tools.get_client_screen_tl_coord_and_size(win_name): {screen_tools.get_client_screen_tl_coord_and_size()}")
+# game_client.set_wndw_pos_and_size()
+# game_client_area_roi = game_client.get_client_tl_br_coords_wrt_screen()
+
+# 791-8=783   &  591-31=560
+
 
 ########### HARDWARE INIT ###########
 # Initialize/instantiate the class that will deal with monitoring keyboard and mouse "clicks".

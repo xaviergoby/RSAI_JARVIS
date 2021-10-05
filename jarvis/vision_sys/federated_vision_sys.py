@@ -6,8 +6,9 @@ from jarvis.vision_sys.obj_tracker import CentroidTracker
 
 
 
-class Vision:
+class FederatedVision:
 
+	# def __init__(self, roi: "(l, t, w, h) tuple", max_detections=10, confidence_threshold=0.1, max_obj_frames_lost=5, mode="PIL"):
 	def __init__(self, roi: "(l, t, w, h) tuple", max_detections=10, confidence_threshold=0.1, max_obj_frames_lost=5, mode="PIL"):
 		"""
 		:param roi: tuple of game client area pos & size (left, top, width height), i.e. (8, 31, 783, 561) when

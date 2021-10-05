@@ -25,5 +25,5 @@ class GameClient:
 		the window will have been set using the def settings (0, 0, 800, 600) found in settings.py
 		If this is the case then the value of the elements in the tuple returned are: (8, 31, 560, 783)
 		"""
-		return screen_tools.get_client_area_tl_pos_and_size()
+		return screen_tools.get_client_tlxy_brxy_wrt_screen()
 

@@ -13,7 +13,9 @@ import numpy as np
 # i.e. (0, 0, 800, 600) then game_client_area_roi should be (8, 31, 791, 591)
 game_client = GameClient()
 game_client.set_wndw_pos_and_size() # osrs game window pos & dims set to (0, 0, 800, 600)
-game_client_area_roi = game_client.get_client_area_pos_and_size() # -> (8, 31, 783, 560)
+game_client_area_roi = game_client.get_client_tl_br_coords_wrt_screen() # -> (8, 31, 791, 591)
+
+print(f"\ngame_client_area_roi: {game_client_area_roi}")
 
 hw_events_listener = HardwareEventsListener()
 hw_events_listener.init_all_states()

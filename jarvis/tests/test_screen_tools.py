@@ -9,19 +9,20 @@ def test_get_client_screen_tl_br_coords(win_name="Old School RuneScape"):
 	client_screen_tl_br_coords = screen_tools.get_client_screen_tl_br_coords(win_name)
 	print(f"client_screen_tl_br_coords: {client_screen_tl_br_coords}")
 
-
 def test_get_client_screen_tl_coord_and_size(win_name="Old School RuneScape"):
 	client_screen_tl_coord_and_size = screen_tools.get_client_screen_tl_coord_and_size(win_name)
 	print(f"client_screen_tl_coord_and_size: {client_screen_tl_coord_and_size}")
 
-
-def test_get_client_area_tl_pos_and_size():
-	client_area_tl_pos_and_size = screen_tools.get_client_area_tl_pos_and_size()
-	print(f"client_area_tl_pos_and_size: {client_area_tl_pos_and_size}")
-
+def test_get_client_tlxy_brxy_wrt_screen():
+	client_area_tl_pos_and_size = screen_tools.get_client_tlxy_brxy_wrt_screen()
+	print(f"client_tlxy_brxy_wrt_screen: {client_area_tl_pos_and_size}")
 
 def test_set_window_pos_and_size(hwnd=None, x_new=0, y_new=0, new_width=800, new_height=600, wndw_name="Old School RuneScape"):
 	screen_tools.set_window_pos_and_size(hwnd, x_new, y_new, new_width, new_height, wndw_name)
+
+def test_get_client_pos_and_size(wndw_name="Old School RuneScape"):
+	client_pos_and_size = screen_tools.get_client_pos_and_size(wndw_name)
+	print(f"client_pos_and_size: {client_pos_and_size}")
 
 
 

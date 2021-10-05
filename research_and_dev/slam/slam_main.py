@@ -9,7 +9,7 @@ import time
 import cv2
 from PIL import ImageGrab
 from src.ui_automation_tools import mouse_events_monitoring
-# from research_and_dev.slam import mini_map
+# from research_and_dev.misc_slam import mini_map
 
 
 # mm_rad_sq_len = 10 # OG px mm_rad_sq_len choice

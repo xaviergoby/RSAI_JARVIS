@@ -235,10 +235,12 @@ def get_client_tl_pos_and_area_dims(wndw_name=None):
 # def get_game_bbox_region():
 # 	main_game_view_roi_bbox_co
 
-def get_client_area_pos_and_dims(wndw_name=None):
+def get_client_area_pos_and_dims(wndw_name=None) -> "(left most x, top most y, width, height)":
 	"""
 	:param wndw_name:
-	:return: 4-tuple (leftmost_x, topmost_y, width, height)
+	:return: 4-tuple (lx, ty, w, h)
+	where: lx & ty are the left and top most x & y coords respectively.
+	(left most x, top most y, width, height)
 	e.g. when window is adjusted with/by calling:
 	#>>>win32gui.MoveWindow("Old School RuneScape", 0, 0, 800, 600, True)
 	then:
@@ -257,7 +259,7 @@ def get_client_area_pos_and_dims(wndw_name=None):
 	return leftmost_x, topmost_y, width, height
 
 
-def get_client_area_tl_pos_and_size():
+def get_client_tlxy_brxy_wrt_screen():
 	# if wndw_name is None:
 	# 	wndw_name = settings.GAME_WNDW_NAME
 	unadjusted_client_main_view_roi_pos_and_dims = get_client_screen_tl_coord_and_size() # i.e. (8, 31, 784, 561)

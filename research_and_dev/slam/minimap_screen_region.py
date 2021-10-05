@@ -1,5 +1,5 @@
 import settings
-# from research_and_dev.slam import
+# from research_and_dev.misc_slam import
 
 
 

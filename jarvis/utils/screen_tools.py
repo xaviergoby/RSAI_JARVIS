@@ -14,7 +14,42 @@ import settings
 ctypes.windll.user32.SetProcessDPIAware()
 
 
-def get_window_screen_tl_br_coords(win_name): # //TODO: Do V&V
+
+def get_client_pos_and_size(wndw_name="Old School RuneScape") -> "the 4-tuple (x, y, w, h), i.e. (8, 31, 783, 560)":
+	"""
+	:param wndw_name: The name of the window (applciation) for which to get the pos & size of
+	Is "Old School RuneScape" by def (recall that settings.GAME_WNDW_NAME="Old School RuneScape")
+	:return: The 4-tuple , i.e. (8, 31, 783, 560) where:
+	- x: x coord of the top left corner of the client (area)**AKA** the client's top left coord axes origin pnt x coord
+    - y: Same as the above, but for the y coord.
+    - w: The (pixel) width of the client (area)
+    - h: The (pixel) height of the client (area)
+	# x, y, client_screen_width, client_screen_height <=> (8, 31, 791, 591)
+	# Therefore, fix this by manually subtracting an add. 8 (=x) pxs from w=791 to get h=783
+	# and subtract an add. 31 (=y) pxs from h=591 to get h=560.
+	So reutnrs (8, 31, 783, 560) when window is pos. @ (0, 0) wrt to the screen w/ a size of (800, 600)
+	---------------------------------------------------------------------------------------
+	ClientToScreen
+		Windows GDI documentatation: "The ClientToScreen function converts the client-area coordinates
+		of a specified point to screen coordinates."
+	"""
+	hwnd = win32gui.FindWindow(None, wndw_name)
+	win32gui.SetForegroundWindow(hwnd)
+	x, y, x1, y1 = win32gui.GetClientRect(hwnd)
+	print(f"win32gui.GetClientRect(hwnd): {x, y, x1, y1}")
+	x, y = win32gui.ClientToScreen(hwnd, (x, y))
+	print(f"win32gui.ClientToScreen(hwnd, (x, y)): {x, y}")
+	x1, y1 = win32gui.ClientToScreen(hwnd, (x1 - x, y1 - y))
+	print(f"win32gui.ClientToScreen(hwnd, (x1 - x, y1 - y)): {x1, y1}")
+	client_screen_width, client_screen_height = x1, y1
+	w_old = client_screen_width
+	h_old = client_screen_height
+	x, y, w, h = x, y, w_old-x, h_old-y
+	return x, y, w, h
+
+# FUNC # 2
+def get_window_screen_tl_br_coords(win_name):
+	# //TODO: 1)Necessity/Redundacy Study  2)V&V (does what it is meant to do & does how it should be done)
 	"""win32gui.GetClientRect(hwnd) returns the client coordinates of the window. left and top will be zero.
 	(left, top, right, bottom) = GetClientRect()
 				~~~ Schematic ~~~
@@ -50,7 +85,7 @@ def get_window_screen_tl_br_coords(win_name): # //TODO: Do V&V
 # (left, top, right, bottom) = win32gui.GetClientRect(hwnd)
 # Returns the rectangle of the client area of a window, in client coordinates
 
-
+# FUNC # 3
 def get_client_screen_tl_br_coords(win_name):
 	"""
 	Does the same thing as get_window_screen__tl_br_coords() BUT instead of coordinates of the
@@ -77,7 +112,7 @@ def get_client_screen_tl_br_coords(win_name):
 	# x1, y1 = win32gui.ClientToScreen(hwnd, (x1 - x, y1 - local_y))
 	return x, y, x1, y1
 
-
+# FUNC # 4
 def get_client_screen_tl_coord_and_size(win_name=settings.GAME_WNDW_NAME):
 	"""
 	Note that: w = width = x1 - x = r - l = right coord - left coord
@@ -121,12 +156,13 @@ def get_client_screen_tl_coord_and_size(win_name=settings.GAME_WNDW_NAME):
 	# print(f"post win32gui.ClientToScreen(hwnd, (x, y))x: {x}")
 	# print(f"post win32gui.ClientToScreen(hwnd, (x, y))y: {y}")
 	x1, y1 = win32gui.ClientToScreen(hwnd, (x1 - x, y1 - y))
+	# return x, y, x1, y1
 	# print(f"x1: {x1}")
 	# print(f"y1: {y1}")
 	client_screen_width, client_screen_height = x1, y1
 	return x, y, client_screen_width, client_screen_height
 
-
+# FUNC # 5
 def set_window_pos_and_size(hwnd = None, x_new = 0, y_new = 0, new_width = 800, new_height = 600, wndw_name = settings.GAME_WNDW_NAME):
 	"""
 	NOTE (from: Microsoft Doc on MoveWindow function):
@@ -162,7 +198,7 @@ def set_window_pos_and_size(hwnd = None, x_new = 0, y_new = 0, new_width = 800, 
 	elif hwnd is not None and wndw_name is not None:
 		win32gui.MoveWindow(hwnd, x_new, y_new, new_width, new_height, True)
 
-
+# FUNC # 6
 def adjust_wndw_pos_and_dims(hwnd=None, x_new=0, y_new=0,
                              new_width=800, new_height=600, window_name=settings.GAME_WNDW_NAME):
 	"""
@@ -174,15 +210,17 @@ def adjust_wndw_pos_and_dims(hwnd=None, x_new=0, y_new=0,
 	return set_window_pos_and_size(hwnd=None, x_new=0, y_new=0,
 	                               new_width=800, new_height=600, wndw_name=settings.GAME_WNDW_NAME)
 
-
-def get_client_specific_bounding_region_px_coords(wndw_name=None):
+# FUNC # 7
+def get_client_specific_bounding_region_px_coords(wndw_name=None) -> 'i.e. (8, 31, 791, 591) when wndw_name="Old School RuneScape"':
 	"""
 	:param wndw_name: the name of the window handle. If the default arg, None, is left/unchanged
 	then the name of the window handle which will be used is: wndw_name = settings.GAME_WNDW_NAME = "Old School RuneScape".
 	This then means bounding_px_coords = settings.GAME_CLIENT_BOUNDING_REGION_PX_COORDS_DICT["Old School RuneScape"]
 	where settings.GAME_CLIENT_BOUNDING_REGION_PX_COORDS_DICT["Old School RuneScape"] = {"left": 8, "top": 31 ,"right": 791, "bottom": 591}
 	:return: a 4-tuple
-	when wndw_name=None => (8, 31, 791, 591) (as seen in settings.GAME_CLIENT_BOUNDING_REGION_PX_COORDS_DICT)
+	when wndw_name=None => (8, 31, 791, 591) (as seen in settings.GAME_CLIENT_BOUNDING_REGION_PX_COORDS_DICT), where:
+	GAME_CLIENT_BOUNDING_REGION_PX_COORDS_DICT = {"Old School RuneScape": {"left": 8, "top": 31 ,"right": 791, "bottom": 591},
+                                              "RuneLite - PolarHobbes": {"left": 4, "top": 27 ,"right": 795, "bottom": 595}}
 	"""
 	if wndw_name is None:
 		wndw_name = settings.GAME_WNDW_NAME
@@ -193,7 +231,7 @@ def get_client_specific_bounding_region_px_coords(wndw_name=None):
 	bottom = bounding_px_coords["bottom"]
 	return left, top, right, bottom
 
-
+# FUNC # 8
 def get_client_tl_pos_and_area_dims(wndw_name=None):
 	"""
 	USE this function determines the correct coordinates of the region of interest of the main view of the client
@@ -235,17 +273,14 @@ def get_client_tl_pos_and_area_dims(wndw_name=None):
 # def get_game_bbox_region():
 # 	main_game_view_roi_bbox_co
 
-def get_client_area_pos_and_dims(wndw_name=None):
+
+# FUNC # 9
+def get_client_area_pos_and_dims(wndw_name=None) -> "(left most x, top most y, width, height)":
 	"""
 	:param wndw_name:
-	:return: 4-tuple (leftmost_x, topmost_y, width, height)
-	e.g. when window is adjusted with/by calling:
-	#>>>win32gui.MoveWindow("Old School RuneScape", 0, 0, 800, 600, True)
-	then:
-	leftmost_x = 8
-	topmost_y = 31
-	width = 783 = 792
-	height = 560 = 591 - 31
+	:return: 4-tuple (lx, ty, w, h)
+	where: lx & ty are the left and top most x & y coords respectively.
+	(left most x, top most y, width, height)
 	"""
 	if wndw_name is None:
 		wndw_name = settings.GAME_WNDW_NAME
@@ -256,11 +291,11 @@ def get_client_area_pos_and_dims(wndw_name=None):
 	height = y2 - y1
 	return leftmost_x, topmost_y, width, height
 
-
-def get_client_area_tl_pos_and_size():
+# FUNC # 10
+def get_client_tlxy_brxy_wrt_screen(wndw_name=settings.GAME_WNDW_NAME):
 	# if wndw_name is None:
 	# 	wndw_name = settings.GAME_WNDW_NAME
-	unadjusted_client_main_view_roi_pos_and_dims = get_client_screen_tl_coord_and_size() # i.e. (8, 31, 784, 561)
+	unadjusted_client_main_view_roi_pos_and_dims = get_client_screen_tl_coord_and_size(wndw_name) # i.e. (8, 31, 784, 561)
 	client_area_tl_pos_x, client_area_tl_pos_y = unadjusted_client_main_view_roi_pos_and_dims[0], unadjusted_client_main_view_roi_pos_and_dims[1]
 	client_area_width = unadjusted_client_main_view_roi_pos_and_dims[2] + client_area_tl_pos_x - 1
 	client_area_height = unadjusted_client_main_view_roi_pos_and_dims[3] + client_area_tl_pos_y - 1
@@ -269,65 +304,124 @@ def get_client_area_tl_pos_and_size():
 
 
 if __name__ == "__main__":
-	# hwnd = win32gui.FindWindow(None, 'Old School RuneScape')
-	# import win32gui
-	wndw_name = settings.GAME_WNDW_NAME
-	# 765x503
-	wndw_x_wrt_screen = 0  # -8
-	wndw_y_wrt_screen = 0  # -31
-	wndw_width_in_screen = 800
-	# wndw_width_in_screen = 765+8
-	wndw_height_in_screen = 600
-	# wndw_height_in_screen = 503+30
-	set_window_pos_and_size(hwnd = None, x_new = wndw_x_wrt_screen, y_new = wndw_y_wrt_screen,
-	                        new_width = wndw_width_in_screen, new_height = wndw_height_in_screen, wndw_name= wndw_name)
+	print("1st Step")
+	import win32gui
+	wndw_name = "Old School RuneScape"
+	hwnd = win32gui.FindWindow(None, wndw_name)
+	print(f"{wndw_name} Window Handle (Window Found?={hwnd!=0}): hwnd={hwnd}")
+	print("\n2nd Step")
+	import time
+	print("Sleeping for 3 seconds...")
+	time.sleep(3)
+	print(f"Please CLICK NOW on your {wndw_name} window and wait")
+	win32gui.SetForegroundWindow(hwnd)
+	print("\n3rd Step")
+	x = 0
+	y = 0
+	width = 800
+	height = 600
+	bRepaint = True
+	win32gui.MoveWindow(hwnd, x, y, width, height, bRepaint)
+	print("\n4th Step")
+	x, y, x1, y1 = win32gui.GetClientRect(hwnd)
+	print(x, y, x1, y1)  # (0, 0, 784, 561)
+	print("\n5th Step")
+	x, y = win32gui.ClientToScreen(hwnd, (x, y))
+	print(x, y)  # (8, 31)
+	print("\n6th Step")
+	x1, y1 = win32gui.ClientToScreen(hwnd, (x1 - x, y1 - y))
+	print(x1, y1)  # (784, 561)
+	print("\n7th Step")
+	wndw_rect = win32gui.GetWindowRect(hwnd)
+	print(wndw_rect)  # (0, 0, 800, 600)
+	print("\n7th Step")
+	client_coord = win32gui.ScreenToClient(hwnd, (wndw_rect[0], wndw_rect[1]))
+	print(client_coord) # (0, 0, 784, 561)
 
-	# win32gui.MoveWindow(hwnd, 0, 0, 800, 600, True)
-	# Changes the position and dimensions of the specified window. For a top-level window,
-	# the position and dimensions are relative to the upper-left corner of the screen.
-	# For a child window, they are relative to the upper-left corner of the parent window's client area.
-	# win32gui.MoveWindow(hwnd, -7, 0, 800, 600, True)
-	# win32gui.MoveWindow(hwnd, 0, 0, 800, 600, True)
-	coords1 = get_client_screen_tl_br_coords(wndw_name) # returns: (0, 0, 784, 561)
-	coords2 = get_client_screen_tl_coord_and_size(wndw_name) # returns: (8, 31, 784, 561)
-	# coords3 = grab_screen_v3()
-	print("OSRS Client screen top-left & bottom-right coords('Old School RuneScape')coords: {0}".format(coords1))
-	print("OSRS Client screen top-left coords & dims('Old School RuneScape')coords: {0}".format(coords2))
-	# Coordinates of the centre of the client screen of the open window w/ the origin located
-	# top left most corner of the CLIENT SCREEN of the open window
-	client_centre_width_center = round(coords2[2]/2) + coords2[0]
-	# client_centre_height_center = round((coords2[3]+coords2[1]+8)/2)
-	client_centre_height_center = round((coords2[3]-coords2[1]+8)/2)
-	print("Client area width, client_centre_width_center : {0}".format(client_centre_width_center))
-	print("Client area height client_centre_height_center : {0}".format(client_centre_height_center))
-	# x_c = coords2[2] - coords2[0]
-	# y_c = coords[3] - coords2[1]
-	# print("grab_screen_v3()coords: {0}".format(coords3))
-	print(f"get_client_specific_bounding_region_px_coords(): {get_client_specific_bounding_region_px_coords()}") # returns --> (8, 31, 791, 591)
+	print("\nClient To Screen Coordinates Transformation Demo")
+	print("Starding demo in 3 seconds...")
+	time.sleep(3)
+	wx1, wy1, ww1, wh1 = 0, 0, 800, 600
+	print(wx1, wy1, ww1, wh1)
+	print(f"Moving Window to Pos{(wx1, wy1)} with size {(ww1, wh1)}")
+	win32gui.MoveWindow(hwnd, wx1, wy1, ww1, wh1, True)
+	wx2, wy2, ww2, wh2 = win32gui.GetWindowRect(hwnd)
+	print(wx2, wy2, ww2, wh2)
+	cx, cy, cx1, cy1 = win32gui.GetClientRect(hwnd)
+	print(f"Client Rect: {cx, cy, cx1, cy1}")
+	sx, sy = win32gui.ClientToScreen(hwnd, (cx, cy))
+	sx1, sy1 = win32gui.ClientToScreen(hwnd, (cx1 - sx, cy1 - sy))
+	print(f"Screen Rect from Client Rect: {sx, sy, sx1, sy1}")
+	print(f"Current Window Rect: {win32gui.GetWindowRect(hwnd)}")
+	print(f"Current Client Rect: {win32gui.GetClientRect(hwnd)}")
+	print(f"Current Screen Rect to Client: {win32gui.ScreenToClient(hwnd, (win32gui.GetWindowRect(hwnd)[0], win32gui.GetWindowRect(hwnd)[1]))}")
+	# new_wndw_rect = (sx, sy, sx1, sy1)
+	# print(new_wndw_rect)
 
 
-	# get_client_specific_bounding_region_px_coords() returns --> (8, 31, 791, 591)
-	# print(get_client_specific_bounding_region_px_coords(wndw_name="RuneLite - PolarHobbes"))
-	# print("get_client_screen_tl_br_coords('Old School RuneScape')coords: {0}".format(coords1))
-	# print(coords2)
-	# print(coords3)
-	# r 528
-	# l 432
+
+
+
+
+	# # hwnd = win32gui.FindWindow(None, 'Old School RuneScape')
+	# # import win32gui
+	# wndw_name = settings.GAME_WNDW_NAME
+	# # 765x503
+	# wndw_x_wrt_screen = 0  # -8
+	# wndw_y_wrt_screen = 0  # -31
+	# wndw_width_in_screen = 800
+	# # wndw_width_in_screen = 765+8
+	# wndw_height_in_screen = 600
+	# # wndw_height_in_screen = 503+30
+	# set_window_pos_and_size(hwnd = None, x_new = wndw_x_wrt_screen, y_new = wndw_y_wrt_screen,
+	#                         new_width = wndw_width_in_screen, new_height = wndw_height_in_screen, wndw_name= wndw_name)
 	#
-	# b 377
-	# t 258
-	# client_centre_width_center: 480
-	# client_centre_height_center: 289
-	# hwnd = win32gui.FindWindow(None, 'Old School RuneScape')
-	# import win32gui
-
-	# win32gui.MoveWindow(hwnd, 0, 0, 800, 600, True)
-	# x_c = ((800 - 8) / 2) = 396
-	# y_c = ((600 - 30 - 8) / 2) + 30 = 311
-	print(f"get_client_tl_pos_and_area_dims: {get_client_tl_pos_and_area_dims()}")
-
-	# import win32gui
-	game_client_wndw_name = "Old School RuneScape"
-	game_client_wndw_handle = win32gui.FindWindow(None, game_client_wndw_name)
-	win_32_gui_get_wndw_rect = win32gui.GetWindowRect(game_client_wndw_handle)
-	print(f"Result of win32gui.GetWindowRect(game_client_wndw_name): {win_32_gui_get_wndw_rect}")
+	# # win32gui.MoveWindow(hwnd, 0, 0, 800, 600, True)
+	# # Changes the position and dimensions of the specified window. For a top-level window,
+	# # the position and dimensions are relative to the upper-left corner of the screen.
+	# # For a child window, they are relative to the upper-left corner of the parent window's client area.
+	# # win32gui.MoveWindow(hwnd, -7, 0, 800, 600, True)
+	# # win32gui.MoveWindow(hwnd, 0, 0, 800, 600, True)
+	# coords1 = get_client_screen_tl_br_coords(wndw_name) # returns: (0, 0, 784, 561)
+	# coords2 = get_client_screen_tl_coord_and_size(wndw_name) # returns: (8, 31, 784, 561)
+	# # coords3 = grab_screen_v3()
+	# print("OSRS Client screen top-left & bottom-right coords('Old School RuneScape')coords: {0}".format(coords1))
+	# print("OSRS Client screen top-left coords & dims('Old School RuneScape')coords: {0}".format(coords2))
+	# # Coordinates of the centre of the client screen of the open window w/ the origin located
+	# # top left most corner of the CLIENT SCREEN of the open window
+	# client_centre_width_center = round(coords2[2]/2) + coords2[0]
+	# # client_centre_height_center = round((coords2[3]+coords2[1]+8)/2)
+	# client_centre_height_center = round((coords2[3]-coords2[1]+8)/2)
+	# print("Client area width, client_centre_width_center : {0}".format(client_centre_width_center))
+	# print("Client area height client_centre_height_center : {0}".format(client_centre_height_center))
+	# # x_c = coords2[2] - coords2[0]
+	# # y_c = coords[3] - coords2[1]
+	# # print("grab_screen_v3()coords: {0}".format(coords3))
+	# print(f"get_client_specific_bounding_region_px_coords(): {get_client_specific_bounding_region_px_coords()}") # returns --> (8, 31, 791, 591)
+	#
+	#
+	# # get_client_specific_bounding_region_px_coords() returns --> (8, 31, 791, 591)
+	# # print(get_client_specific_bounding_region_px_coords(wndw_name="RuneLite - PolarHobbes"))
+	# # print("get_client_screen_tl_br_coords('Old School RuneScape')coords: {0}".format(coords1))
+	# # print(coords2)
+	# # print(coords3)
+	# # r 528
+	# # l 432
+	# #
+	# # b 377
+	# # t 258
+	# # client_centre_width_center: 480
+	# # client_centre_height_center: 289
+	# # hwnd = win32gui.FindWindow(None, 'Old School RuneScape')
+	# # import win32gui
+	#
+	# # win32gui.MoveWindow(hwnd, 0, 0, 800, 600, True)
+	# # x_c = ((800 - 8) / 2) = 396
+	# # y_c = ((600 - 30 - 8) / 2) + 30 = 311
+	# print(f"get_client_tl_pos_and_area_dims: {get_client_tl_pos_and_area_dims()}")
+	#
+	# # import win32gui
+	# game_client_wndw_name = "Old School RuneScape"
+	# game_client_wndw_handle = win32gui.FindWindow(None, game_client_wndw_name)
+	# win_32_gui_get_wndw_rect = win32gui.GetWindowRect(game_client_wndw_handle)
+	# print(f"Result of win32gui.GetWindowRect(game_client_wndw_name): {win_32_gui_get_wndw_rect}")

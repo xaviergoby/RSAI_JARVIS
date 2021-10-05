@@ -1,6 +1,6 @@
 import settings
 from research_and_dev.event_driven_system.utils.data_storage_tools import get_bot_current_loc
-# from research_and_dev.slam import
+# from research_and_dev.misc_slam import
 
 
 
